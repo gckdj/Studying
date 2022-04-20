@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1a3a023-2e32-4a5a-8631-5f63c1fb4316" name="변경" comment="Bean Test">
-      <change afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/beanfind/ApplicationContextExtendsFindTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/main/resources/appConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/beandefinition/BeanDefinitionTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/singleton/SingletonService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/singleton/SingletonTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/xml/xmlAppContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
@@ -15,11 +21,12 @@
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/reports/tests/test/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/reports/tests/test/packages/hello.core.beanfind.html" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/reports/tests/test/packages/hello.core.beanfind.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/reports/tests/test/packages/hello.core.beanfind.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/test-results/test/binary/output.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/test-results/test/binary/output.bin.idx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/test-results/test/binary/results.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/beanfind/ApplicationContextBeanFindTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/beanfind/ApplicationContextBeanFindTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +64,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="spring-beans.schema" />
         <option value="Class" />
       </list>
     </option>
@@ -93,9 +101,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="모듈" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.47471264" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
-  <component name="RunManager" selected="Gradle.ApplicationContextExtendsFindTest.findAllBeanByObjectType">
+  <component name="RunManager" selected="Gradle.SingletonTest.singletonServiceTest">
     <configuration name="ApplicationContextBeanFindTest.findAllBeanByType" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -119,7 +131,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ApplicationContextExtendsFindTest.findAllBeanByObjectType" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="BeanDefinitionTest.findAppApplicationBean" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Spring/kimyounghan(junior)/core" />
@@ -132,7 +144,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;hello.core.beanfind.ApplicationContextExtendsFindTest.findAllBeanByObjectType&quot;" />
+            <option value="&quot;hello.core.beandefinition.BeanDefinitionTest.findAppApplicationBean&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -142,7 +154,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ApplicationContextExtendsFindTest.findBeanByParentTypeBeanName" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SingletonTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Spring/kimyounghan(junior)/core" />
@@ -155,7 +167,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;hello.core.beanfind.ApplicationContextExtendsFindTest.findBeanByParentTypeBeanName&quot;" />
+            <option value="&quot;hello.core.singleton.SingletonTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -165,7 +177,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ApplicationContextExtendsFindTest.findBeanByParentTypeDuplicate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SingletonTest.pureContainer" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Spring/kimyounghan(junior)/core" />
@@ -178,7 +190,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;hello.core.beanfind.ApplicationContextExtendsFindTest.findBeanByParentTypeDuplicate&quot;" />
+            <option value="&quot;hello.core.singleton.SingletonTest.pureContainer&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -188,7 +200,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ApplicationContextExtendsFindTest.findBeanBySubType" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SingletonTest.singletonServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/Spring/kimyounghan(junior)/core" />
@@ -201,7 +213,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;hello.core.beanfind.ApplicationContextExtendsFindTest.findBeanBySubType&quot;" />
+            <option value="&quot;hello.core.singleton.SingletonTest.singletonServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -220,11 +232,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ApplicationContextExtendsFindTest.findAllBeanByObjectType" />
-        <item itemvalue="Gradle.ApplicationContextExtendsFindTest.findBeanBySubType" />
-        <item itemvalue="Gradle.ApplicationContextExtendsFindTest.findBeanByParentTypeBeanName" />
-        <item itemvalue="Gradle.ApplicationContextExtendsFindTest.findBeanByParentTypeDuplicate" />
+        <item itemvalue="Gradle.SingletonTest.singletonServiceTest" />
         <item itemvalue="Gradle.ApplicationContextBeanFindTest.findAllBeanByType" />
+        <item itemvalue="Gradle.SingletonTest.pureContainer" />
+        <item itemvalue="Gradle.SingletonTest" />
+        <item itemvalue="Gradle.BeanDefinitionTest.findAppApplicationBean" />
       </list>
     </recent_temporary>
   </component>
@@ -241,7 +253,13 @@
       <workItem from="1650206191697" duration="1409000" />
       <workItem from="1650278996539" duration="4643000" />
       <workItem from="1650367758329" duration="2266000" />
-      <workItem from="1650371133178" duration="36000" />
+      <workItem from="1650371133178" duration="293000" />
+      <workItem from="1650457774350" duration="67000" />
+      <workItem from="1650458137619" duration="89000" />
+      <workItem from="1650458411325" duration="368000" />
+      <workItem from="1650458796296" duration="20000" />
+      <workItem from="1650458965725" duration="3503000" />
+      <workItem from="1650462516302" duration="267000" />
     </task>
     <task id="LOCAL-00001" summary="애플리케이션 컨텍스트 컨테이너 수강">
       <created>1650207531425</created>
@@ -264,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650284605394</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Bean Test">
+      <created>1650371419724</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1650371419724</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

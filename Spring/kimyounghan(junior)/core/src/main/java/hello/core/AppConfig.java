@@ -18,16 +18,19 @@ public class AppConfig {
     /* appConfig에서 반환하는 구현체만 변경하면 기존 코드는 수정할 필요가 없음. */
     @Bean
     public MemberService memberService() {
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public OrderService orderService() {
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceimpl(memberRepository(), discountPolicy());
     }
 

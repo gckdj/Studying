@@ -38,5 +38,6 @@ public class ConfigurationSingletonTest {
         AppConfig bean = ac.getBean(AppConfig.class);
 
         System.out.println("bean = " + bean.getClass());
+        // return new (클래스) 일 경우에는 스프링에서 새로운 객체를 계속 생성함.(싱글톤 보장 X)
     }
 }

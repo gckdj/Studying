@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1a3a023-2e32-4a5a-8631-5f63c1fb4316" name="변경" comment="Spring SingleTon" />
+    <list default="true" id="a1a3a023-2e32-4a5a-8631-5f63c1fb4316" name="변경" comment="Spring Singleton Test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/build/reports/tests/test/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/singleton/ConfigurationSingletonTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spring/kimyounghan(junior)/core/src/test/java/hello/core/singleton/ConfigurationSingletonTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +89,7 @@
     <property name="project.structure.last.edited" value="모듈" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.47471264" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
@@ -94,7 +99,30 @@
       <recent name="hello.core.singleton" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ConfigurationSingletonTest.configurationTest">
+  <component name="RunManager" selected="Gradle.ConfigurationSingletonTest.Configuration">
+    <configuration name="ConfigurationSingletonTest.Configuration" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Spring/kimyounghan(junior)/core" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;hello.core.singleton.ConfigurationSingletonTest.Configuration&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="ConfigurationSingletonTest.configurationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -109,29 +137,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;hello.core.singleton.ConfigurationSingletonTest.configurationTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="SingletonTest.singletonServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/Spring/kimyounghan(junior)/core" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;hello.core.singleton.SingletonTest.singletonServiceTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -219,11 +224,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.ConfigurationSingletonTest.Configuration" />
         <item itemvalue="Gradle.ConfigurationSingletonTest.configurationTest" />
         <item itemvalue="Gradle.StatefulServiceTest" />
         <item itemvalue="Gradle.StatefulServiceTest.statefulServiceSingleton" />
         <item itemvalue="Gradle.SingletonTest.springContainer" />
-        <item itemvalue="Gradle.SingletonTest.singletonServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -249,6 +254,7 @@
       <workItem from="1650462516302" duration="428000" />
       <workItem from="1650499354418" duration="1037000" />
       <workItem from="1650547586652" duration="2411000" />
+      <workItem from="1650724881344" duration="925000" />
     </task>
     <task id="LOCAL-00001" summary="애플리케이션 컨텍스트 컨테이너 수강">
       <created>1650207531425</created>
@@ -292,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650550012869</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Spring Singleton Test">
+      <created>1650724916244</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1650724916244</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,6 +332,7 @@
     <MESSAGE value="Bean Test" />
     <MESSAGE value="BeanDefinitionTest, SingletonService" />
     <MESSAGE value="Spring SingleTon" />
-    <option name="LAST_COMMIT_MESSAGE" value="Spring SingleTon" />
+    <MESSAGE value="Spring Singleton Test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Spring Singleton Test" />
   </component>
 </project>

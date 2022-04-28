@@ -5,6 +5,7 @@ import hello.core.discount.FixDiscountPolicy;
 import hello.core.discount.RateDidcountPolicy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,9 @@ public class ApplicationContextExtendsFindTest {
     @Test
     @DisplayName("부모 타입으로 조회, 자식이 둘 이상 있으면, 중복 오류가 발생한다.")
     void findBeanByParentTypeDuplicate() {
-        DiscountPolicy bean = ac.getBean(DiscountPolicy.class);
+        // DiscountPolicy bean = ac.getBean(DiscountPolicy.class);
+        // DiscountPolicy 클래스의 빈을 생성하는 과정에서 DiscountPolicy의 동일한 부모타입인 구현 클래스가 2개 이상인 경우 오류발생
+        // NoUniqueBeanDefinitionException -> 검색되는 빈이 2개인 오류가 발생하므로 테스트는 통과
         assertThrows(NoUniqueBeanDefinitionException.class,
                 () -> ac.getBean(DiscountPolicy.class));
     }

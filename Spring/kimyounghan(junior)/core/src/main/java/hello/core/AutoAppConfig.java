@@ -1,5 +1,8 @@
 package hello.core;
 
+import hello.core.member.MemberRepository;
+import hello.core.member.MemoryMemberRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
@@ -15,5 +18,10 @@ import org.springframework.context.annotation.FilterType;
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class)
 )
 public class AutoAppConfig {
-    
+    // 가급적이면 수동 등록은 자제
+    // 스프링 자체의 기본세팅 사용 권장
+    @Bean(name =  "memoryMemberRepository")
+    MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
 }

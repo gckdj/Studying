@@ -20,8 +20,8 @@ import org.springframework.context.annotation.FilterType;
 public class AutoAppConfig {
     // 가급적이면 수동 등록은 자제
     // 스프링 자체의 기본세팅 사용 권장
-    @Bean(name =  "memoryMemberRepository")
-    MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
-    }
+//    @Bean
+//    MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
 }

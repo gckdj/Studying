@@ -3,7 +3,6 @@ package hello.core.member;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.Map;
 
 @Component

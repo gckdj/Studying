@@ -1,10 +1,14 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
+import hello.core.discount.FixDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
+import hello.core.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +22,15 @@ public class OrderServiceimpl implements OrderService {
     // 앱테스트 코딩에서는 편함
     private MemberRepository memberRepository;
     private DiscountPolicy discountPolicy;
+
+    @Autowired
+    // Qualifier를 생성자 앞에 붙이면 사전에 붙여둔 구현체 Qualifier와 이름 맞춤
+    // Qualifier로 지정된 Qualifier가 붙은 스프링 빈을 못찾으면 스프링빈 이름을 기준으로 찾음
+    // Qualifier 는 Qualifier를 찾는 용도로 사용하는 것이 명확하고 좋음. 시니어도 헛갈리는 사용하는 개념에서 헛갈림.
+    public OrderServiceimpl(MemberRepository memberRepository, /*@Qualifier("mainDiscountPolicy")*/ @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     // 생성자가 아닌 수정자를 사용할 경우에
 //    @Autowired

@@ -140,4 +140,9 @@ public class SingletonWithPrototypeTest1 {
             System.out.println("PrototypeBean.destroy " + this);
         }
     }
+
+    // 정리
+    // 프로토타입 빈을 사용하는 경우는 실무에서 극히 드물다.
+    // 스프링을 사용하다보면 자바 표준과 겹치는 경우가 있는데, 특별히 다른 컨테이너를 사용할 일이 없다면,
+    // 스프링이 제공하는 기능을 사용하면 된다.
 }

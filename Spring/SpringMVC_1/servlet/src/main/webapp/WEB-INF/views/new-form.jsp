@@ -6,6 +6,7 @@
 </head>
 <body>
 <!-- 상대경로 사용, [현재 URL이 속한 계층 경로 + /save] -->
+<%-- 실무에서 상대경로보다는 절대경로 위주로 사용한다. --%>
 <form action="save" method="post">
     username: <input type="text" name="username" />
     age: <input type="text" name="age" />

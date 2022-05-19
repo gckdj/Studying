@@ -64,9 +64,11 @@ public class FrontControllerServletV3 extends HttpServlet {
                 .forEachRemaining(paramName -> paramMap.put(paramName, request.getParameter(paramName)));
         return paramMap;
     }
-
+    
     // 각 컨트롤러마다 서블릿 정보를 호출, 생성하지 않고 프론트컨트롤러에서만 사용
     // 서블릿 코드들을 사용하지 않으면서 실제 구현하는 컨트롤러 코드는 깔끔해진다.
     // 논리경로를 물리경로로 반환하는 viewResolver 의 기능을 하는 메서드를 만들면 좋은 점은
     // 물리경로가 변한다하더라도 viewResolver에 있는 문자열만 수정하면 된다. (유지보수 용이)
+    // ModelView를 생성하고 반환하는 과정이 불편한 단점
+    // V4에서는 ViewName만 반환한다.
 }

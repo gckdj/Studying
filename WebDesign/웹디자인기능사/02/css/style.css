@@ -35,7 +35,8 @@ i, em, address {
 header {
     width: 100%;
     height: 100px;
-    background: #ccc;
+    position: relative;
+    z-index: 10;
 }
 
 header h1 {
@@ -49,7 +50,15 @@ header nav {
     padding-top: 50px;
     padding-right: 20px;
 }
-header nav .nav_bg{}
+header nav .nav_bg{
+    width: 100%;
+    height: 120px;
+    background: #3cb149;
+    position: absolute;
+    left: 0;
+    top: 100px;
+    display: none;
+}
 header nav ul.gnb{
     width: 100%;
     text-align: center;
@@ -58,6 +67,7 @@ header nav ul.gnb{
 header nav ul.gnb>li{
     width: 25%;
     float: left;
+    position: relative;
 }
 
 header nav ul.gnb> li > a {
@@ -77,8 +87,11 @@ header nav ul.gnb > li:hover > a {
 
 header nav ul.gnb > li > ul.sub {
     width: 100%;
-    height: 40px;
     line-height: 40px;
+    position: absolute;
+    left: 0;
+    top: 50px;
+    display: none;
 }
 
 header nav ul.gnb > li > ul.sub > li {
@@ -88,7 +101,7 @@ header nav ul.gnb > li > ul.sub > li {
 header nav ul.gnb > li > ul.sub > li > a {
     display: block;
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
 header nav ul.gnb > li > ul.sub > li:hover > a {
@@ -105,6 +118,30 @@ header nav ul.gnb>li>ul.gnb>li>a{}
 ul.slide {
     width: 100%;
     height: 300px;
+    position: relative;
+}
+
+ul.slide li {
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-indent: -9999px;
+}
+
+ul.slide li:nth-child(1) {
+    background: url(../img/[Slide]/img1.jpg);
+}
+
+ul.slide li:nth-child(2) {
+    background: url(../img/[Slide]/img2.jpg);
+    left: -1200px;
+}
+
+ul.slide li:nth-child(3) {
+    background: url(../img/[Slide]/img3.jpg);
+    left: -1200px;
 }
 
 .content {

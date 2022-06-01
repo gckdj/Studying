@@ -12,7 +12,14 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="popUpBg"></div>
     <div class="wrap">
+        <div class="popUpMbox">
+            <h2>팝업 제목</h2>
+            <p>내용 내용</p>
+            
+            <button id="close">X 닫기</button>
+        </div>
         <header class="clearfix">
             <h1>
                 <a href="#">
@@ -59,16 +66,16 @@
             <li><a href="#"></a></li>
         </ul>
         
-        <div class="contents">
+        <div class="contents clearfix">
             <section class="notice">
                 <h2>공지사항</h2>
                 <ul>
-                    <li><a href="#"></a><span class="day"></span></li>
-                    <li><a href="#"></a><span class="day"></span></li>
-                    <li><a href="#"></a><span class="day"></span></li>
-                    <li><a href="#"></a><span class="day"></span></li>
-                    <li><a href="#"></a><span class="day"></span></li>
-                    <li><a href="#"></a><span class="day"></span></li>
+                    <li><a href="#">2022년도 매입주택 품질점검 사전기술지도 시행 안내</a><span class="day">2022-06-01</span></li>
+                    <li><a href="#">성동구 청년매입임대주택(와이하우스) 사용승인서 게시</a><span class="day">2022-05-31</span></li>
+                    <li><a href="#">우리공사 사칭 전세임대주택 관련 사기에 유의하시기 바랍니다.</a><span class="day">2022-05-31</span></li>
+                    <li><a href="#">2022 서울시 공공임대주택 논문공모전</a><span class="day">2022-05-31</span></li>
+                    <li><a href="#">에드가쌍문_역세권청년주택(사전점검) 행사 안내</a><span class="day">2022-05-31</span></li>
+                    <li><a href="#">제41차 장기전세주택(2022. 5.13. 공고) 최종 청약접수 결과 및 청약마감 안내</a><span class="day">2022-05-31</span></li>
                 </ul>
             </section>
             
@@ -82,9 +89,9 @@
             </section>
             
             <section class="sub_banner">
-                <h2>
+                <h2 class="not-title">
                     <a href="#">
-                        <img src="../02/img/Contents/배너 이미지/banner.jpg" alt="">
+                        <img src="../02/img/Contents/배너 이미지/banner.jpg" alt="" style="width: 100%;height: 200px;">
                     </a>
                 </h2>
             </section>
@@ -102,12 +109,11 @@
             </div>
             
             <div class="fam">
-                <p>패밀리 사이트</p>
-                <ul>
-                    <li>네이버</li>
-                    <li>티스토리</li>
-                    <li>다음</li>
-                </ul>
+                <select name="" id="">
+                    <option value="">네이버</option>
+                    <option value="">티스토리</option>
+                    <option value="">다음</option>
+                </select>
             </div>
         </footer>
     </div>

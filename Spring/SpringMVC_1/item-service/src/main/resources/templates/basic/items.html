@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<!-- 기존 정적 html 이 아닌 동적 html 로 수정(타임리프 적용) -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+            href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- 소스에서 처리된 경로 -->
+    <!-- <link href="/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- 타임리프가 기존 경로를 덮는다 -->
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>상품 목록</h2>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/basic/items/add}'|"
+                    type="button">상품등록
+            </button>
+            <!-- http://localhost:8080/basic/items/add -->
+        </div>
+    </div>
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>수량</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each = "item : ${items}">
+                    <!-- th:href 링크에 query를 명시해주면 쿼리파리미터를 붙임 -->
+                    <!-- th:href="@{/basic/items/{itemId}(itemId=${item.id}, query = 'test')}" -->
+                    <!-- result => http://localhost:8080/basic/items/1?query=test -->
+                    <td><a href="item.html" th:href="@{/basic/items/{itemId}(itemId=${item.id})}" th:text="${item.id}">회원id</a></td>
+                    <!-- <td><a href="item.html" th:href="@{/basic/items/{itemId}(itemId=${item.id})}" th:text="${item.itemName}">상품명</a></td> -->
+                    <!-- 리터럴(||) 형식을 사용할 경우 아래와 같이 변경가능 -->
+                    <td><a href="item.html" th:href="@{|/basic/items/${item.id}|}" th:text="${item.itemName}">상품명</a></td>
+                    <td th:text = "${item.price}">10000</td>
+                    <td th:text = "${item.quantity}">10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

@@ -57,7 +57,8 @@ a {
     position: relative;
     width: 25%;
     text-align: center;
-    background: #ffffff
+    background: #ffffff;
+    z-index: 999;
 }
 
 li.lv1:hover > a {
@@ -85,9 +86,40 @@ ul.lv2 > li:hover > a {
 .slideContainer {
     width: 1200px;
     height: 300px;
+    z-index: 900;
 }
 
 .slideWrap {
     position: relative;
 }
 
+.content {
+    height: 300px;
+    display: flex;
+}
+
+.content  div {
+    flex: 1;
+}
+
+.tab-menu li {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 600;
+    padding: 15px;
+}
+
+.notice {
+    text-overflow: ellipsis;
+}
+
+.notice li {
+    display: flex;
+    text-overflow: ellipsis;
+}
+
+.notice li a {
+    width: 300px;
+    font-size: 22px;
+    font-weight: 400;
+}

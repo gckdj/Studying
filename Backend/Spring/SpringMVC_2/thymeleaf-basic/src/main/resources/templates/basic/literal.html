@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>리터럴</h1>
+<ul>
+    <!--주의! 다음 주석을 풀면 예외가 발생함-->
+    <!-- <li>"hello world!" = <span th:text="hello world!"></span></li>-->
+
+    <!-- 텍스트를 연속으로 공백없이 입력된 경우 하나의 토큰으로 인식 -->
+    <!-- 그러나, 공백이 발생하면 오류 '' 로 감싸야됨. -->
+    <li>'hello' + ' world!' = <span th:text="'hello' + ' world!'"></span></li>
+    <li>'hello world!' = <span th:text="'hello world!'"></span></li>
+    <li>'hello ' + ${data} = <span th:text="'hello ' + ${data}"></span></li>
+
+    <!-- 리터럴 대체 문법 파이프로 감싸면 내부에서 자유롭게 작성가능 -->
+    <li>리터럴 대체 |hello ${data}| = <span th:text="|hello ${data}|"></span></li>
+</ul>
+</body>
+</html>

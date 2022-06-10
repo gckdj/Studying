@@ -7,8 +7,11 @@
 <body>
 <h1>URL 링크</h1>
 <ul>
+    <!-- @{/hello} -> /hello -->
     <li><a th:href="@{/hello}">basic url</a></li>
     <li><a th:href="@{/hello(param1=${param1}, param2=${param2})}">hello query param</a></li>
+    <!-- 경로를 만드는 부분과 파라미터의 값을 입력하는 부분이 구분 -->
+    <!-- 초기적응 단계에서 헛갈릴 수 있지만 적응되면 유지보수 차원에서 좋음. -->
     <li><a th:href="@{/hello/{param1}/{param2}(param1=${param1}, param2=${param2})}">path variable</a></li>
     <li><a th:href="@{/hello/{param1}(param1=${param1}, param2=${param2})}">path variable + query parameter</a></li>
 </ul>

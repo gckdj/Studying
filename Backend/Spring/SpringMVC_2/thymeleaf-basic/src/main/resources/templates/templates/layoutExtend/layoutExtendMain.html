@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<!-- layoutFile 에서 replace 변수로 선언된 title 과 section 태그를 가져와서 현재 페이지의 태그에 맞게 바꿈 -->
+<html th:replace="~{template/layoutExtend/layoutFile :: layout(~{::title}, ~{::section})}"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메인 페이지 타이틀</title>
+</head>
+<body>
+<section>
+    <p>메인 페이지 컨텐츠</p>
+    <div>메인 페이지 포함 내용</div>
+</section>
+</body>
+</html>

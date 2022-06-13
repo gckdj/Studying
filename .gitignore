@@ -8,3 +8,5 @@ Spring/SpringMVC_1/item-service/gradle/wrapper/gradle-wrapper.properties
 Spring/SpringMVC_1/item-service/gradle/wrapper/gradle-wrapper.jar
 Spring/SpringMVC_1/item-service/gradle/wrapper/gradle-wrapper.jar
 *.jar
+Backend/Spring/SpringMVC_1/servlet/.gradle/7.4.2/checksums/checksums.lock
+*.bin

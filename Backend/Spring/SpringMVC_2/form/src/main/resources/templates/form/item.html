@@ -52,14 +52,26 @@
     <!-- multi checkbox -->
     <div>
         <div>등록 지역</div>
-        <div th:each="region : ${regions}" class="form-check form-check-inline" disabled>
+        <div th:each="region : ${regions}" class="form-check form-check-inline">
             <!-- * : form 태그 최초에 선언된 오브젝트 item -->
-            <input type="checkbox" th:field="${item.regions}" th:value="${region.key}" class="form-check-input">
+            <input type="checkbox" th:field="${item.regions}" th:value="${region.key}" class="form-check-input" disabled>
             <!-- 타임리프에서 동적으로 태그가 생성될때 아이디를 붙여주는 기능 #ids-->
             <!-- 실행결과 regions1, regions2 형식으로 붙는다 -->
             <label th:for="${#ids.prev('regions')}" th:text="${region.value}" class="form-check-label">서울</label>
         </div>
     </div>
+
+    <!-- radio button -->
+    <div>
+        <div>상품 종류</div>
+        <div th:each="type : ${itemTypes}" class="form-check form-check-inline">
+            <input type="radio" th:field="${item.itemType}" th:value="${type.name()}" class="form-check-input" disabled>
+            <label th:for="${#ids.prev('itemType')}" th:text="${type.description}" class="form-check-label">
+                BOOK
+            </label>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="col">

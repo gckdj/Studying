@@ -2,6 +2,7 @@ package hello.itemservice.web.form;
 
 import hello.itemservice.domain.item.Item;
 import hello.itemservice.domain.item.ItemRepository;
+import hello.itemservice.domain.item.ItemType;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,9 @@ public class FormItemController {
         log.info("item.open={}", item.getOpen());
         log.info("item.regions={}", item.getRegions());
         // result : item.regions=[SEOUL, BUSAN]
+        log.info("item.itemType={}", item.getItemType());
+        // result : item.itemType=FOOD
+        // result(체크안함) : item.itemType=null
 
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
@@ -77,6 +81,12 @@ public class FormItemController {
         regions.put("BUSAN", "부산");
         regions.put("JEJU", "제주");
         return regions;
+    }
+
+    // ItemType enum 의 모든 정보 => 배열로 반환
+    @ModelAttribute("itemTypes")
+    public ItemType[] itemTypes() {
+        return ItemType.values();
     }
 }
 

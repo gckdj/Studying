@@ -8,6 +8,11 @@
         .container {
             max-width: 560px;
         }
+
+        .field-error {
+            border-color: #f57a86;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -19,17 +24,27 @@
     </div>
 
     <form action="item.html" th:action th:object="${item}" method="post">
+
+        <!-- errors + '?' : 최초 화면 생성시 errors 가 null 일 경우 결과값으로 null 을 반환해서 nullPointerException 이 발생하지 않음. -->
+        <div th:if="${errors?.containsKey('globalError')}">
+            <p class="field-error" th:text="${errors['globalError']}">전체 오류 메시지</p>
+        </div>
+
+        <!-- errors 에 담긴 오류에 해당하는 태그는 field-error class 를 얻고 css 가 변경된다. -->
         <div>
             <label for="itemName" th:text="#{label.item.itemName}">상품명</label>
-            <input type="text" id="itemName" th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요">
+            <input type="text" id="itemName" th:field="*{itemName}" th:class="${errors?.containsKey('itemName')} ? 'form-control field-error' : 'form-control'" class="form-control" placeholder="이름을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('itemName')}" th:text="${errors['itemName']}">상품명 오류</div>
         </div>
         <div>
             <label for="price" th:text="#{label.item.price}">가격</label>
-            <input type="text" id="price" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요">
+            <input type="text" id="price" th:field="*{price}" th:class="${errors?.containsKey('price')} ? 'form-control field-error' : 'form-control'" class="form-control" placeholder="가격을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('price')}" th:text="${errors['price']}">가격 오류</div>
         </div>
         <div>
             <label for="quantity" th:text="#{label.item.quantity}">수량</label>
-            <input type="text" id="quantity" th:field="*{quantity}" class="form-control" placeholder="수량을 입력하세요">
+            <input type="text" id="quantity" th:field="*{quantity}" th:class="${errors?.containsKey('quantity')} ? 'form-control field-error' : 'form-control' "class="form-control" placeholder="수량을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('quantity')}" th:text="${errors['quantity']}">수량 오류</div>
         </div>
 
         <hr class="my-4">
@@ -45,9 +60,13 @@
                         type="button" th:text="#{button.cancel}">취소</button>
             </div>
         </div>
-
     </form>
-
-</div> <!-- /container -->
+    <!--
+        * 중복코드 다수
+        * 타입 오류 처리 예외 X
+        * 정수형 형태를 로그보관 어려움
+        * 고객이 입력한 값의 형태 자체도 로그로 관리 필요
+    -->
+</div>
 </body>
 </html>

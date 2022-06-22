@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -42,39 +45,100 @@ public class ValidationItemControllerV2 {
         return "validation/v2/addForm";
     }
 
-    @PostMapping("/add")
-    public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes, Model model) {
-        // 검증 오류 결과를 보관
-        Map<String, String> errors = new HashMap<>();
+//    @PostMapping("/add")
+//    public String addItemV2(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+//        // BindingResult 가 있으면 오류가 발생하더라도 BindingResult 에 오류결과값을 담고 반환한다.
+//        // 없다면? 오류메세지가 뷰에 반환되지 않고, 화이트페이지가 뜬다
+//        if (!StringUtils.hasText(item.getItemName())) {
+//            // 사용자가 오입력한 내용을 FieldError 에 넣어준다. -> 사용자가 오입력한 값이 input 내에 계속해서 유지됨
+//            bindingResult.addError(new FieldError("item", "itemName", item.getItemName(), false, null, null, "상품 이름은 필수입니다."));
+//        }
+//        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
+//            bindingResult.addError(new FieldError("item", "price", item.getPrice(), false, null, null, "가격은 1,000 ~ 1,000,000 까지 허용합니다."));
+//        }
+//        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
+//            bindingResult.addError(new FieldError("item", "quantity", item.getQuantity(), false, null, null, "수량은 최대 9,999 까지 허용합니다."));
+//        }
+//        if (item.getPrice() != null && item.getQuantity() != null) {
+//            int resultPrice = item.getPrice() * item.getQuantity();
+//            if (item.getPrice() * item.getQuantity() < 10000) {
+//                bindingResult.addError(new ObjectError("item", null, null, "가격 * 수량의 합은 10,000원 이상이어야 합니다. 현재 값 = " + resultPrice));
+//            }
+//        }
+//
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors = {} ", bindingResult);
+//            return "validation/v2/addForm";
+//        }
+//
+//        Item savedItem = itemRepository.save(item);
+//        redirectAttributes.addAttribute("itemId", savedItem.getId());
+//        redirectAttributes.addAttribute("status", true);
+//        return "redirect:/validation/v2/items/{itemId}";
+//    }
 
-        // 검증 로직
-        // getItemName 이 없다면
+    // V3에서는 오류메세지와 관련된 프로퍼티를 생성해서 일관된 메세지를 반환하고 유지관리 용이성을 올린다.
+//    @PostMapping("/add")
+//    public String addItemV3(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+//
+//        log.info("objectName = {}", bindingResult.getObjectName());
+//        log.info("target = {}", bindingResult.getTarget());
+//
+//        if (!StringUtils.hasText(item.getItemName())) {
+//            bindingResult.addError(new FieldError("item", "itemName", item.getItemName(), false, new String[]{"required.item.itemName"}, null, null));
+//        }
+//        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
+//            bindingResult.addError(new FieldError("item", "price", item.getPrice(), false, new String[]{"range.item.price"}, new Object[]{1000, 1000000}, null));
+//        }
+//        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
+//            bindingResult.addError(new FieldError("item", "quantity", item.getQuantity(), false, new String[]{"max.item.quantity"}, new Object[]{9999}, null));
+//        }
+//        if (item.getPrice() != null && item.getQuantity() != null) {
+//            int resultPrice = item.getPrice() * item.getQuantity();
+//            if (item.getPrice() * item.getQuantity() < 10000) {
+//                bindingResult.addError(new ObjectError("item", new String[]{"totalPriceMin"}, new Object[]{10000, resultPrice}, null));
+//            }
+//        }
+//
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors = {} ", bindingResult);
+//            return "validation/v2/addForm";
+//        }
+//
+//        Item savedItem = itemRepository.save(item);
+//        redirectAttributes.addAttribute("itemId", savedItem.getId());
+//        redirectAttributes.addAttribute("status", true);
+//        return "redirect:/validation/v2/items/{itemId}";
+//    }
+
+    @PostMapping("/add")
+    public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        log.info("objectName = {}", bindingResult.getObjectName());
+        log.info("target = {}", bindingResult.getTarget());
+
+        // rejectValue() 는 자동으로 addError 과정을 처리해줌
         if (!StringUtils.hasText(item.getItemName())) {
-            errors.put("itemName", "상품 이름은 필수입니다.");
+            bindingResult.rejectValue("itemName", "required");
         }
-        // 입력된 가격이 null이거나 기준치보다 적거나 혹은 너무 크다면
         if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
-            errors.put("price", "가격은 1,000 ~ 1,000,000 까지 허용합니다");
+            bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
         }
         if (item.getQuantity() == null || item.getQuantity() >= 9999) {
-            errors.put("quantity", "수량은 최대 9,999 까지 허용합니다.");
+            bindingResult.rejectValue("quantity", "max", new Object[]{9999}, null);
         }
         if (item.getPrice() != null && item.getQuantity() != null) {
             int resultPrice = item.getPrice() * item.getQuantity();
             if (item.getPrice() * item.getQuantity() < 10000) {
-                errors.put("globalError", "가격 * 수량의 합은 10,000원 이상이어야 합니다. 현재 값 = " + resultPrice);
+                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
             }
         }
-        // 검증에 실패(errors 에 값이 비어있지 않았다면 검증에 실패했다는 것) 하면 다시 입력 폼으로 이동
-        if (!errors.isEmpty()) {
-            log.info("errors = {} ", errors);
-            model.addAttribute("errors", errors);
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors = {} ", bindingResult);
             return "validation/v2/addForm";
         }
-        // result :
-        //2022-06-21 20:03:15.070  INFO 8404 --- [nio-8080-exec-7] h.i.w.v.ValidationItemControllerV1       : errors = {quantity=수량은 최대 9,999 까지 허용합니다., price=가격은 1,000 ~ 1,000,000 까지 허용합니다}
 
-        // 성공 로직
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);

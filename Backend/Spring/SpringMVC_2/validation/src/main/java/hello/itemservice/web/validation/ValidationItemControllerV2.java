@@ -6,16 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -24,6 +20,15 @@ import java.util.Map;
 public class ValidationItemControllerV2 {
 
     private final ItemRepository itemRepository;
+    private final ItemValidator itemValidator;
+
+    // 컨트롤러가 호출될때마다 검증을 하고시작
+    // 메서드가 속해있는 컨트롤러에서만 동작
+
+    // @InitBinder
+    // public void init(WebDataBinder webDataBinder) {
+    //     webDataBinder.addValidators(itemValidator);
+    // }
 
     @GetMapping
     public String items(Model model) {
@@ -111,28 +116,64 @@ public class ValidationItemControllerV2 {
 //        return "redirect:/validation/v2/items/{itemId}";
 //    }
 
+//    @PostMapping("/add")
+//    public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+//
+//        log.info("objectName = {}", bindingResult.getObjectName());
+//        log.info("target = {}", bindingResult.getTarget());
+//
+//        // 간단히 공백와 널값을 체크해주는 메서드
+//        ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, "itemName", "required");
+//
+//        // rejectValue() 는 자동으로 addError 과정을 처리해줌
+//        if (!StringUtils.hasText(item.getItemName())) {
+//            bindingResult.rejectValue("itemName", "required");
+//        }
+//
+//        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
+//            bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
+//        }
+//        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
+//            bindingResult.rejectValue("quantity", "max", new Object[]{9999}, null);
+//        }
+//        if (item.getPrice() != null && item.getQuantity() != null) {
+//            int resultPrice = item.getPrice() * item.getQuantity();
+//            if (item.getPrice() * item.getQuantity() < 10000) {
+//                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
+//            }
+//        }
+//
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors = {} ", bindingResult);
+//            return "validation/v2/addForm";
+//        }
+//
+//        Item savedItem = itemRepository.save(item);
+//        redirectAttributes.addAttribute("itemId", savedItem.getId());
+//        redirectAttributes.addAttribute("status", true);
+//        return "redirect:/validation/v2/items/{itemId}";
+//    }
+
+//    @PostMapping("/add")
+//    public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+//        itemValidator.validate(item, bindingResult);
+//
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors = {} ", bindingResult);
+//            return "validation/v2/addForm";
+//        }
+//
+//        Item savedItem = itemRepository.save(item);
+//        redirectAttributes.addAttribute("itemId", savedItem.getId());
+//        redirectAttributes.addAttribute("status", true);
+//        return "redirect:/validation/v2/items/{itemId}";
+//    }
+
+
     @PostMapping("/add")
-    public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-
-        log.info("objectName = {}", bindingResult.getObjectName());
-        log.info("target = {}", bindingResult.getTarget());
-
-        // rejectValue() 는 자동으로 addError 과정을 처리해줌
-        if (!StringUtils.hasText(item.getItemName())) {
-            bindingResult.rejectValue("itemName", "required");
-        }
-        if (item.getPrice() == null || item.getPrice() < 1000 || item.getPrice() > 1000000) {
-            bindingResult.rejectValue("price", "range", new Object[]{1000, 1000000}, null);
-        }
-        if (item.getQuantity() == null || item.getQuantity() >= 9999) {
-            bindingResult.rejectValue("quantity", "max", new Object[]{9999}, null);
-        }
-        if (item.getPrice() != null && item.getQuantity() != null) {
-            int resultPrice = item.getPrice() * item.getQuantity();
-            if (item.getPrice() * item.getQuantity() < 10000) {
-                bindingResult.reject("totalPriceMin", new Object[]{10000, resultPrice}, null);
-            }
-        }
+    // @Validated 가 붙은 객체에 자동으로 검증을 함
+    // 검증 로직이 여러가지일 경우 구분이 필요 => supports()
+    public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             log.info("errors = {} ", bindingResult);

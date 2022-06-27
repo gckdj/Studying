@@ -20,7 +20,6 @@ import java.util.List;
 public class ValidationItemControllerV3 {
 
     private final ItemRepository itemRepository;
-    private final ItemValidator itemValidator;
 
     @GetMapping
     public String items(Model model) {
@@ -42,11 +41,13 @@ public class ValidationItemControllerV3 {
         return "validation/v3/addForm";
     }
 
+    // @Validated 를 붙여놓으면 Item 클래스 내에 정의한 어노테이션 따라감
+    // @Validated(스프링 지원) = @Valid(자바표준)
+    // * 작동순서
+    // @ModelAttribute 에 의해 클래스에 정의된 타입대로 매칭
+    // 매칭(설정해놓은 범위, 유형과 일치하는지 확인) 중 실패하면 FieldError 추가 -> Validator 적용
     @PostMapping("/add")
-    // @Validated 가 붙은 객체에 자동으로 검증을 함
-    // 검증 로직이 여러가지일 경우 구분이 필요 => supports()
-    public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-
+    public String addItem(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             log.info("errors = {} ", bindingResult);
             return "validation/v3/addForm";

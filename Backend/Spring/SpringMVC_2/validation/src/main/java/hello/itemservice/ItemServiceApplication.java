@@ -11,10 +11,4 @@ public class ItemServiceApplication implements WebMvcConfigurer {
 	public static void main(String[] args) {
 		SpringApplication.run(ItemServiceApplication.class, args);
 	}
-
-	// 웹앱의 모든 컨트롤러에 검증을 일괄적용하는법
-	@Override
-	public Validator getValidator() {
-		return WebMvcConfigurer.super.getValidator();
-	}
 }

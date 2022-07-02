@@ -45,6 +45,8 @@ public class ValidationItemControllerV4 {
         return "validation/v4/addForm";
     }
     @PostMapping("/add")
+    // ModelAttribute 에 item으로 별도 명시를 하지않으면 기본값에 의해 ItemSaveForm 명칭으로 model에 값이 담김
+    // 이럴 경우 템플릿 th:object 에는 item 으로 되어있어 인식을 못한다.
     public String addItem(@Validated @ModelAttribute("item") ItemSaveForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (form.getPrice() != null && form.getQuantity() != null) {
             int resultPrice = form.getPrice() * form.getQuantity();
@@ -88,13 +90,14 @@ public class ValidationItemControllerV4 {
             return "validation/v4/editForm";
         }
 
-        Item item = new Item();
-        item.setItemName(form.getItemName());
-        item.setPrice(form.getPrice());
-        item.setQuantity(form.getQuantity());
+        Item itemParam = new Item();
+        itemParam.setItemName(form.getItemName());
+        itemParam.setPrice(form.getPrice());
+        itemParam.setQuantity(form.getQuantity());
 
-        itemRepository.update(itemId, item);
+        itemRepository.update(itemId, itemParam);
         return "redirect:/validation/v4/items/{itemId}";
     }
+    // 폼 전송 객체를 분리해서 등록과 수정에 맞는 객체를 생성하고 사용 -> 검증이 명확해지고 유지보수성 up
 }
 

@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -82,30 +83,30 @@ public class LoginController {
 //    }
 
     // 세션관리가 적용된 로그인로직
-    @PostMapping("/login")
-    public String loginV3(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return "login/loginForm";
-        }
-
-        Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
-        log.info("login? {}", loginMember);
-
-        // reject -> global error
-        if (loginMember == null) {
-            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "login/loginForm";
-        }
-
-        // 서블릿이 제공하는 세션사용 로직
-        // 세션이 있으면 세션을 반환하고 없으면 신규 세션을 생성한다.
-        // getSession(true) -> default cf) false일 경우에는 기존 세션이 없으면 새로운 세션 생성 X
-        HttpSession session = request.getSession();
-        // 세션에 로그인 회원정보를 보관
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
-        return "redirect:/";
-    }
+//    @PostMapping("/login")
+//    public String loginV3(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request) {
+//        if (bindingResult.hasErrors()) {
+//            return "login/loginForm";
+//        }
+//
+//        Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
+//        log.info("login? {}", loginMember);
+//
+//        // reject -> global error
+//        if (loginMember == null) {
+//            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 일치하지 않습니다.");
+//            return "login/loginForm";
+//        }
+//
+//        // 서블릿이 제공하는 세션사용 로직
+//        // 세션이 있으면 세션을 반환하고 없으면 신규 세션을 생성한다.
+//        // getSession(true) -> default cf) false일 경우에는 기존 세션이 없으면 새로운 세션 생성 X
+//        HttpSession session = request.getSession();
+//        // 세션에 로그인 회원정보를 보관
+//        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+//
+//        return "redirect:/";
+//    }
 
 //    @PostMapping("/logout")
 //    public String logout(HttpServletResponse response) {
@@ -128,6 +129,27 @@ public class LoginController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+
+    @PostMapping("/login")
+    public String loginV4(
+            @Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
+            @RequestParam(defaultValue = "/") String redirectURL,
+            HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            return "login/loginForm";
+        }
+        Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
+
+        log.info("login? {}", loginMember);
+        if (loginMember == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            return "login/loginForm";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+        return "redirect:" + redirectURL;
     }
 
     private void expireCookie(HttpServletResponse response, String cookieName) {

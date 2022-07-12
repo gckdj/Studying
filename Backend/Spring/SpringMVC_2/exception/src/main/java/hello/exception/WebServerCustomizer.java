@@ -6,7 +6,8 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-@Component
+// 에러페이지를 일일이 등록하는 것은 매우불편
+// @Component
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
 
     // 통신에러 시 호출할 템플릿 재정의

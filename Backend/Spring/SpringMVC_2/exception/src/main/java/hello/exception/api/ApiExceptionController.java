@@ -16,6 +16,18 @@ public class ApiExceptionController {
         if (id.equals("ex")) {
             throw new RuntimeException("잘못된 사용자");
         }
+
+        if (id.equals("bad")) {
+            throw new IllegalArgumentException("잘못된 입력 값");
+            //{
+            //    "timestamp": "2022-07-14T13:16:47.261+00:00",
+            //    "status": 500,
+            //    "error": "Internal Server Error",
+            //    "exception": "java.lang.IllegalArgumentException",
+            //    "path": "/api/members/bad"
+            //}
+        }
+
         return new MemberDto(id, "hello" + id);
     }
 

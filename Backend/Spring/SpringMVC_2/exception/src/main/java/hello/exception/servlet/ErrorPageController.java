@@ -52,6 +52,11 @@ public class ErrorPageController {
         return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode));
     }
 
+    //{
+    //    "message": "잘못된 사용자",
+    //    "status": 500
+    //}
+
     private void printErrorInfo(HttpServletRequest request) {
         log.info("ERROR_EXCEPTION = {}", request.getAttribute(ERROR_EXCEPTION));
         log.info("ERROR_EXCEPTION_TYPE = {}", request.getAttribute(ERROR_EXCEPTION_TYPE));

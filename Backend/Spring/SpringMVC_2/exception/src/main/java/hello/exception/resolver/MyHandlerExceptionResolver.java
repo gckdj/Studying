@@ -15,8 +15,10 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
         try {
+            // IllegalArgumentException 발생 시 sendError 호출, 상태코드 400 지정으로 모델뷰 반환
             if (ex instanceof IllegalArgumentException) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+                // 생성되는 모델뷰에 값을 넣거나, getWriter() 를 활용하면 사용자에 적합한 에러메세지를 반환할 수 있다.
                 return new ModelAndView();
             }
         } catch (IOException e) {

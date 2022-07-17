@@ -27,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     // 예외핸들러 등록
+    // Configure 리졸버를 사용하면, 스프링이 기본으로 등록하는 ExceptionResolver가 제거되므로 주의, extend 메서드를 사용권장
     @Override
     public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
         resolvers.add(new MyHandlerExceptionResolver());

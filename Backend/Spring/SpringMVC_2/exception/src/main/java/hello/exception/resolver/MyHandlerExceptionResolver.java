@@ -11,8 +11,11 @@ import java.io.IOException;
 @Slf4j
 public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
 
+
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+
+        log.info("call resolver = {}", ex);
 
         try {
             // IllegalArgumentException 발생 시 sendError 호출, 상태코드 400 지정으로 모델뷰 반환

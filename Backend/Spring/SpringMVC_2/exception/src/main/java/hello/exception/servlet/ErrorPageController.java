@@ -51,7 +51,6 @@ public class ErrorPageController {
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode));
     }
-
     //{
     //    "message": "잘못된 사용자",
     //    "status": 500

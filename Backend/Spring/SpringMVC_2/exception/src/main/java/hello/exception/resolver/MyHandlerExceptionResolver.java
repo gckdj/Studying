@@ -28,7 +28,6 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
             log.error("resolver ex", e);
         }
         return null;
-
         //{
         //    "timestamp": "2022-07-15T11:38:04.689+00:00",
         //    "status": 400,

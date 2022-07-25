@@ -53,9 +53,7 @@ public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
         } catch (IOException e) {
             log.error("resolver ex", e);
         }
-
         return null;
-
         // WAS에 예외가 전달되지 않고 스프링 MVC에서 종결
         // 예외를 이곳에서 모두 처리할 수 있다는 것이 핵심
     }

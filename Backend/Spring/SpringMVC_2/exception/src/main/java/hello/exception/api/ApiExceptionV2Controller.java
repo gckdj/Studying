@@ -15,28 +15,28 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class ApiExceptionV2Controller {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ErrorResult illegalExHandle(IllegalArgumentException e) {
-        log.error("[exceptionHandle] ex", e);
-        return new ErrorResult("BAD", e.getMessage());
-    }
-
-    // 컨트롤러 호출과 거의 동일
-    @ExceptionHandler
-    public ResponseEntity<ErrorResult> userExHandle(UserException e) {
-        log.error("[exceptionHandle] ex", e);
-        ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
-        return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
-    }
-
-    // 위에서 매핑한 예외에서 처리하지 못하면 최상위 예외인 Exception에서 처리
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler
-    public ErrorResult exHandle(Exception e) {
-        log.error("[exceptionHandle] ex", e);
-        return new ErrorResult("EX", "내부 오류");
-    }
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public ErrorResult illegalExHandle(IllegalArgumentException e) {
+//        log.error("[exceptionHandle] ex", e);
+//        return new ErrorResult("BAD", e.getMessage());
+//    }
+//
+//    // 컨트롤러 호출과 거의 동일
+//    @ExceptionHandler
+//    public ResponseEntity<ErrorResult> userExHandle(UserException e) {
+//        log.error("[exceptionHandle] ex", e);
+//        ErrorResult errorResult = new ErrorResult("USER-EX", e.getMessage());
+//        return new ResponseEntity<>(errorResult, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    // 위에서 매핑한 예외에서 처리하지 못하면 최상위 예외인 Exception에서 처리
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler
+//    public ErrorResult exHandle(Exception e) {
+//        log.error("[exceptionHandle] ex", e);
+//        return new ErrorResult("EX", "내부 오류");
+//    }
 
     //{
     //    "code": "EX",

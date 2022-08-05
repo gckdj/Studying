@@ -11,6 +11,6 @@ public class ItemForm {
 
     private Long itemId;
     private String itemName;
-    private UploadFile attachFile;
-    private List<UploadFile> imageFiles;
+    private List<MultipartFile> imageFiles;
+    private MultipartFile attachFile;
 }

@@ -12,8 +12,12 @@ import static hello.jdbc.connection.ConnectionConst.*;
 public class DBConnectionUtil {
 
     public static Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        log.info("get connection = {}", connection, connection.getClass());
-        return connection;
+        try {
+            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            log.info("get connection = {}, class = {}", connection, connection.getClass());
+            return connection;
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 }

@@ -11,12 +11,12 @@ public class MemberRepositoryV0 {
 
     // 로우레벨 코딩
     public Member save(Member member) throws SQLException {
+
+        // 파라미터 바인딩 방식을 사용해야하는 이유는 sql injection 때문
         String sql = "insert into member(member_id, money) values (?, ?)";
 
         Connection con = null;
         PreparedStatement pstmt = null;
-
-
 
         try {
             con = getConnection();
@@ -38,7 +38,7 @@ public class MemberRepositoryV0 {
         }
     }
 
-    private void close(Connection con, Statement stmt, ResultSet rs) {
+    private void close(Connection  con, Statement stmt, ResultSet rs) {
 
         if (rs != null) {
             try {

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>djdj</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+        
+        ul, li {
+            list-style: none;
+        }
+        
+        .wrap {
+            display: flex;
+            width: 1000px;
+            height: 700px;
+        }
+        
+        .main {
+            width: 800px;
+        }
+        
+        header {
+            width: 200px;
+        }
+        
+        header h2 {
+            padding-top: 20px;
+            text-align: center;
+        }
+        
+        nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        li.lv1 {
+            position: relative;
+            text-align: center;
+            background-color: rgba(127, 255, 212, 0.588);
+        }
+        
+        ul.lv2 {
+            display: none;
+            left: 160px;
+            position: absolute;
+            top: -30px;
+            background-color: rgba(127, 255, 212, 0.588);
+        }
+        
+        nav a {
+            display: block;
+            width: 160px;
+            height: 40px;
+            line-height: 40px;
+        }
+        
+        li.lv1:hover > a {
+            background-color: #ffffff;
+        }
+        
+        ul.lv2 li:hover > a {
+            background-color: #ffffff;
+        }
+        
+        .slideWrap img {
+            width: 800px;
+            height: 350px;
+        }
+        
+        .slideContainer {
+            height: 350px;
+            overflow: hidden;
+        }
+        
+        .slideWrap {
+            width: 300%;
+        }
+        
+        .slide {
+            width: 800px;
+            float: left;
+        }
+        
+        .middle {
+            display: flex;
+            width: 800px;
+            height: 250px;
+        }
+        
+        .tab {
+            width: 350px;
+        }
+        
+        .gallery {
+            width: 225px;
+        }
+        
+        .link {
+            width: 225px;
+        }
+        
+        .footer {
+            height: 100px;
+        }
+        
+        h4 {
+            padding-left: 20px;
+            padding-top: 5px;
+        }
+        
+        .tabContent {
+            width: 350px;
+        }
+        
+        .tabContent li {
+            display: flex;
+            height: 50px;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tabContent li a {
+            display: inline-block;
+            width: 240px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .imageBox {
+            width: 225px;
+            height: 224px;
+        }
+        
+        .imageBox div {
+            display: inline-block;
+        }
+        
+        .imageBox img {
+            width: 60px;
+            height: 60px;
+            padding-top: 70px;
+            margin-left: 11px;
+        }
+        
+        .link img {
+            width: 225px;
+            height: 250px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <h2>해운대 빛축제<a href="#"></a></h1>
+            <nav>
+                <ul>
+                    <li class="lv1">
+                        <a href="#">이용안내</a>
+                        <ul class="lv2">
+                            <li><a href="#">이용방법</a></li>
+                            <li><a href="#">이용시간</a></li>
+                            <li><a href="#">이용요금</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">이벤트정보</a>
+                        <ul class="lv2">
+                            <li><a href="#">현장이벤트</a></li>
+                            <li><a href="#">온라인이벤트</a></li>
+                            <li><a href="#">이벤트예약</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">프로그램</a>
+                        <ul class="lv2">
+                            <li><a href="#">프로그램안내</a></li>
+                            <li><a href="#">온라인예약</a></li>
+                            <li><a href="#">단체예약상담</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">고객센터</a>
+                        <ul class="lv2">
+                            <li><a href="#">공지사항</a></li>
+                            <li><a href="#">자주묻는질문</a></li>
+                            <li><a href="#">자료실</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="main">
+            <div class="slideContainer">
+                <div class="slideWrap">
+                    <div class="slide"><a href="#"><img src="img/img1.jpg" alt="" srcset=""></a></div>
+                    <div class="slide"><a href="#"><img src="img/img2.jpg" alt="" srcset=""></a></div>
+                    <div class="slide"><a href="#"><img src="img/img3.jpg" alt="" srcset=""></a></div>
+                </div>
+            </div>
+            <div class="middle">
+                <div class="tab">
+                    <h4>공지사항</h4>
+                    <ul class="tabContent">
+                        <li><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>날짜날짜날짜</span></li>
+                        <li><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>날짜날짜날짜</span></li>
+                        <li><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>날짜날짜날짜</span></li>
+                        <li><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>날짜날짜날짜</span></li>
+                    </ul>
+                </div>
+                <div class="gallery">
+                    <h4>갤러리</h4>
+                    <div class="imageBox">
+                        <div><a href="#"><img src="img/img1.jpg" alt="" srcset=""></a></div>
+                        <div><a href="#"><img src="img/img2.jpg" alt="" srcset=""></a></div>
+                        <div><a href="#"><img src="img/img3.jpg" alt="" srcset=""></a></div>
+                    </div>
+                </div>
+                <div class="link">
+                    <div><a href="#"><img src="/img/img1.jpg" alt=""></a></div>
+                </div>
+            </div>
+            <div class="footer">
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            $('li.lv1').mouseenter(function () {
+                $(this).find('ul.lv2').stop().fadeIn();
+            });
+            
+            $('li.lv1').mouseleave(function () {
+                $(this).find('ul.lv2').stop().fadeOut();
+            })
+            
+            setInterval(function () {
+                $('.slideWrap').animate({"margin-left" : "-100%"}, function () {
+                    $('.slide').first().appendTo('.slideWrap');
+                    $('.slideWrap').css({"margin-left" : "0%"});
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

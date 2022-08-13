@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>djdj</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        li {
+            list-style: none;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+            width: 150px;
+            z-index: 999;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #000000;
+        }
+        
+        .wrap {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .justify-content-center {
+            justify-content: center;
+        }
+        
+        .justify-content-between {
+            justify-content: space-between;
+        }
+        
+        .align-items-center {
+            align-items: center;
+        }
+        
+        .lv2 {
+            display: none;
+        }
+        
+        .fs-18 {
+            font-size: 18px;
+        }
+        
+        .fw-bold {
+            font-weight: bold;
+        }
+        
+        header {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        li:hover {
+            background-color: #3e81fc;
+        }
+        
+        li:hover > a {
+            color: #ffffff;
+        }
+        
+        .menu-bg {
+            position : absolute;
+            width: 1200px;
+            height: 160px;
+            background-color: #3e80fc94;
+            z-index: 997;
+            display: none;
+        }
+        
+        .lv2-2 {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="flex justify-content-between align-item-center" style="margin-top : 30px; height : 40px">
+            <h1>JUST쇼핑몰</h1>
+            <nav>
+                <ul class="flex">
+                    <li class="lv1">
+                        <a href="#">탑</a>
+                        <ul class="lv2">
+                            <li><a href="#">블라우스</a></li>
+                            <li><a href="#">티</a></li>
+                            <li><a href="#">셔츠</a></li>
+                            <li><a href="#">니트</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">아우터</a>
+                        <ul class="lv2">
+                            <li><a href="#">쟈켓</a></li>
+                            <li><a href="#">코트</a></li>
+                            <li><a href="#">가디건</a></li>
+                            <li><a href="#">머플러</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">팬츠</a>
+                        <ul class="lv2">
+                            <li><a href="#">청바지</a></li>
+                            <li><a href="#">짧은바지</a></li>
+                            <li><a href="#">긴바지</a></li>
+                            <li><a href="#">레깅스</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">악세서리</a>
+                        <ul class="lv2">
+                            <li><a href="#">귀고리</a></li>
+                            <li><a href="#">목걸이</a></li>
+                            <li><a href="#">반지</a></li>
+                            <li><a href="#">팔찌</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        
+        <header class="flex justify-content-between align-item-center" style="margin-top : 300px; height : 40px">
+            <h1>JUST쇼핑몰</h1>
+            <nav>
+                <ul class="flex">
+                    <li class="lv1">
+                        <a href="#">탑</a>
+                        <ul class="lv2">
+                            <li><a href="#">블라우스</a></li>
+                            <li><a href="#">티</a></li>
+                            <li><a href="#">셔츠</a></li>
+                            <li><a href="#">니트</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">아우터</a>
+                        <ul class="lv2">
+                            <li><a href="#">쟈켓</a></li>
+                            <li><a href="#">코트</a></li>
+                            <li><a href="#">가디건</a></li>
+                            <li><a href="#">머플러</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">팬츠</a>
+                        <ul class="lv2">
+                            <li><a href="#">청바지</a></li>
+                            <li><a href="#">짧은바지</a></li>
+                            <li><a href="#">긴바지</a></li>
+                            <li><a href="#">레깅스</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">악세서리</a>
+                        <ul class="lv2">
+                            <li><a href="#">귀고리</a></li>
+                            <li><a href="#">목걸이</a></li>
+                            <li><a href="#">반지</a></li>
+                            <li><a href="#">팔찌</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="menu-bg"></div>
+        
+        <header class="flex justify-content-between align-item-center" style="margin-top : 300px; height : 40px">
+            <h1>JUST쇼핑몰</h1>
+            <nav>
+                <ul class="flex">
+                    <li class="lv1-1">
+                        <a href="#">탑</a>
+                        <ul class="lv2-2">
+                            <li><a href="#">블라우스</a></li>
+                            <li><a href="#">티</a></li>
+                            <li><a href="#">셔츠</a></li>
+                            <li><a href="#">니트</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1-1">
+                        <a href="#">아우터</a>
+                        <ul class="lv2-2">
+                            <li><a href="#">쟈켓</a></li>
+                            <li><a href="#">코트</a></li>
+                            <li><a href="#">가디건</a></li>
+                            <li><a href="#">머플러</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1-1">
+                        <a href="#">팬츠</a>
+                        <ul class="lv2-2">
+                            <li><a href="#">청바지</a></li>
+                            <li><a href="#">짧은바지</a></li>
+                            <li><a href="#">긴바지</a></li>
+                            <li><a href="#">레깅스</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1-1">
+                        <a href="#">악세서리</a>
+                        <ul class="lv2-2">
+                            <li><a href="#">귀고리</a></li>
+                            <li><a href="#">목걸이</a></li>
+                            <li><a href="#">반지</a></li>
+                            <li><a href="#">팔찌</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            $('ul').mouseenter(function () {
+                $('.lv2, .menu-bg').stop().slideDown();
+            });
+            
+            $('ul').mouseleave(function () {
+                $('.lv2, .menu-bg').stop().slideUp();
+            })
+            
+            $('li.lv1-1').mouseenter(function () {
+                console.log($(this));
+                $(this).find('.lv2-2').stop().slideDown();
+            });
+            
+            $('li.lv1-1').mouseleave(function () {
+                console.log($(this));
+                $(this).find('.lv2-2').stop().slideUp();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .wrap {
+            width: 1000px;
+            height: 650px;
+        }
+        
+        ul, li {
+            list-style: none;
+        }
+        
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        
+        header {
+            width: 200px;
+            height: 650px;
+            background-color: beige;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        h2 {
+            padding-top: 30px;
+            text-align: center;
+        }
+        
+        nav {
+            margin-top : 30px;
+        }
+        
+        li {
+            text-align: center;
+        }
+        
+        li.lv1 {
+            width: 150px;
+            background-color: rgba(165, 42, 42, 0.471);
+            border-top: 1px solid #ff6200;
+        }
+        
+        ul.lv2 {
+            border-top: 1px solid #ff6200;
+        }
+        
+        ul.lv2 {
+            display: none;
+        }
+        
+        nav li a{
+            height: 40px;
+            display: block;
+            color: aliceblue;
+            line-height: 40px;
+            border-color: rgb(255, 140, 0);
+        }
+        
+        nav > ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+        
+        li.lv1:hover > a {
+            background-color: #ff6200;
+        }
+        
+        ul.lv2 li:hover > a {
+            background-color: #ff6200;
+        }
+        
+        header li {
+            color: rgb(255, 255, 255);
+        }
+        
+        .wrap {
+            display: flex;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            width: 800px;
+        }
+        
+        .slideContainer {
+            height: 350px;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+        }
+        
+        .slide img {
+            width: 800px;
+            height: 350px;
+        }
+        
+        .gallery a img {
+            width: 100px;
+            height: 100px;
+            margin-left: 10px;
+        }
+        
+        .tabContent {
+            width: 350px;
+            display: flex;
+        }
+        
+        .tabContent li {
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+        }
+        
+        .banner {
+            width: 225px;
+            height: 200px;
+        }
+        
+        .link {
+            width: 225px;
+            height: 200px;
+        }
+        
+        .box {
+            height: 2px;
+        }
+        
+        .notice li {
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .notice li a {
+            display: inline-block;
+            width: 240px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        
+        .on {
+            font-weight: bold;
+            background-color: #5050f4c4;
+        }
+        
+        .content-on {
+            display: block !important;
+        }
+        
+        .tabBox ul {
+            display: none;
+        }
+        
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 160px;
+            background-color: #5050f4c4;
+        }
+        
+        .gallery li {
+            display: inline-block;
+            padding-top: 27px;
+        }
+        
+        .box {
+            display: flex;
+            width: 750px;
+        }
+        
+        .modal {
+            display: none;
+            position: absolute;
+            top: 85px;
+            left: 382px;
+            width: 400px;
+            height: 331px;
+            background: #fff;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal">
+        <h3>제목</h3>
+        <button>닫기</button>
+        <div>
+            아무내용아무내용아무내용아무내용아무내용아무내용아무내용아무내용아무내용아무내용아무내용아무내용아무내용아무내용
+        </div>
+    </div>
+    <div class="wrap">
+        <header>
+            <h2>해운대 빛축제<a href="#"></a></h1>
+            <nav>
+                <ul>
+                    <li class="lv1">
+                        <a href="#">이용안내</a>
+                        <ul class="lv2">
+                            <li><a href="#">이용방법</a></li>
+                            <li><a href="#">이용시간</a></li>
+                            <li><a href="#">이용요금</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">이벤트정보</a>
+                        <ul class="lv2">
+                            <li><a href="#">현장이벤트</a></li>
+                            <li><a href="#">온라인이벤트</a></li>
+                            <li><a href="#">이벤트예약</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">프로그램</a>
+                        <ul class="lv2">
+                            <li><a href="#">프로그램안내</a></li>
+                            <li><a href="#">온라인예약</a></li>
+                            <li><a href="#">단체예약상담</a></li>
+                        </ul>
+                    </li>
+                    <li class="lv1">
+                        <a href="#">고객센터</a>
+                        <ul class="lv2">
+                            <li><a href="#">공지사항</a></li>
+                            <li><a href="#">자주묻는질문</a></li>
+                            <li><a href="#">자료실</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="content">
+            <div class="slideContainer">
+                <div class="slideWrap">
+                    <div class="slide"><a href=""><img src="img/img1.jpg" alt=""></a></div>
+                    <div class="slide" style="display: none;"><a href=""><img src="img/img2.jpg" alt=""></a></div>
+                    <div class="slide" style="display: none;"><a href=""><img src="img/img3.jpg" alt=""></a></div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="tab">
+                    <ul class="tabContent">
+                        <li class="on"><a href="#">공지사항</a></li>
+                        <li><a href="#">갤러리</a></li>
+                    </ul>
+                    <div class="tabBox">
+                        <ul class="notice content-on on">
+                            <li id="top"><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>공지사항날짜</span></li>
+                            <li><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>공지사항날짜</span></li>
+                            <li><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>공지사항날짜</span></li>
+                            <li><a href="#">공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항공지사항</a><span>공지사항날짜</span></li>
+                        </ul>
+                        <ul class="gallery">
+                            <li class="icon"><a href="#"><img src="img/img1.jpg" alt="" srcset=""></a></li>
+                            <li class="icon"><a href="#"><img src="img/img2.jpg" alt="" srcset=""></a></li>
+                            <li class="icon"><a href="#"><img src="img/img3.jpg" alt="" srcset=""></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="banner">
+                    <div><a href="#"><img src="/img/img1.jpg" alt="" style="width : 225px; height : 200px"></a></div>
+                </div>
+                <div class="link">
+                    <div><a href="#"><img src="/img/img1.jpg" alt="" style="width : 225px; height : 200px"></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('li.lv1').mouseenter(function () {
+                $(this).find('ul.lv2').stop().slideDown();
+            });
+            $('li.lv1').mouseleave(function () {
+                $(this).find('ul.lv2').stop().slideUp();
+            });
+            
+            setInterval(function () {
+                $('.slide').first().fadeOut(1500).next().fadeIn(1500);
+                $('.slide').first().appendTo('.slideWrap');
+                
+            }, 3000);
+            
+            $('.tabContent li').click(function () {
+                $('.tabContent li').removeClass('on');
+                $(this).addClass('on');
+                
+                var idx = $(this).index();
+                $('.tabBox ul').removeClass('content-on');
+                $('.tabBox ul').eq(idx).addClass('content-on');
+            });
+            
+            $('#top').click(function () {
+                $('.modal').show();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slide</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        img {
+            margin: 0px;
+            padding: 0px;
+        }
+        .wrap {
+            width: 1200px;
+            background-color: #ccc;
+            height: 900px;
+            margin: 0 auto;
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .justify-content-center {
+            justify-content: center;
+        }
+        
+        .align-item-center {
+            align-items: center;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .fw-bold {
+            font-weight: bold;
+            
+        }
+        
+        .slideContainer1 {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .slideWrap1 {
+            width: 300%;
+        }
+        
+        .slide1 {
+            float: left;
+        }
+        
+        .slideContainer2 {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .mb-2 {
+            margin-bottom: 20px;
+        }
+        
+        .slideContainer3 {
+            height: 300px;
+            /* overflow: hidden; */
+        }
+        
+        .slide3 {
+            position: absolute;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="slideContainer1 mb-2">
+            <div class="slideWrap1">
+                <div class="slide1">
+                    <img src="img/img1.jpg" alt="">
+                </div>
+                <div class="slide1">
+                    <img src="img/img2.jpg" alt="">
+                </div>
+                <div class="slide1">
+                    <img src="img/img3.jpg" alt="">
+                </div>
+            </div>
+        </div>
+        
+        <div class="slideContainer2 mb-2">
+            <div class="slideWrap2">
+                <div class="slide2">
+                    <img src="img/img1.jpg" alt="">
+                </div>
+                <div class="slide2">
+                    <img src="img/img2.jpg" alt="">
+                </div>
+                <div class="slide2">
+                    <img src="img/img3.jpg" alt="">
+                </div>
+            </div>
+        </div>
+        
+        <div class="slideContainer3 mb-2">
+            <div class="slideWrap3">
+                <div class="slide3">
+                    <img src="img/img1.jpg" alt="">
+                </div>
+                <div class="slide3" style="display: none;">
+                    <img src="img/img2.jpg" alt="">
+                </div>
+                <div class="slide3" style="display: none;">
+                    <img src="img/img3.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            setInterval(function () {
+                $('.slideWrap1').animate({'margin-left' : '-100%'}, function () {
+                    $('.slide1').first().appendTo('.slideWrap1');
+                    $('.slideWrap1').css({'margin-left' : '0%'});
+                });
+                
+                $('.slideWrap2').animate({'margin-top' : '-300px'}, function () {
+                    $('.slide2').first().appendTo('.slideWrap2');
+                    $('.slideWrap2').css({'margin-top' : '0px'});
+                });
+                
+                $('.slide3').first().fadeOut(2000).appendTo('.slideWrap3');
+                $('.slide3').first().fadeIn(2000);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

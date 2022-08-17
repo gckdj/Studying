@@ -10,7 +10,7 @@ client.on('ready', () => {
   
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isChatInputCommand()) return;
-  
+
 	if (interaction.commandName === 'gc') {
 		await interaction.reply('jm!');
 	}

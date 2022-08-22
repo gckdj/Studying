@@ -47,5 +47,11 @@ class MemberRepositoryV0Test {
         // 해당 데이터가 없는 경우에는 NoSuchElementException 예외이용
         assertThatThrownBy(() -> repository.findById(member.getMemberId()))
                 .isInstanceOf(NoSuchElementException.class);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

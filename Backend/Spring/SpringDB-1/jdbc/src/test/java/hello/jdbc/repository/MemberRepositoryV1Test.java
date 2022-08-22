@@ -1,19 +1,40 @@
 package hello.jdbc.repository;
 
+import com.zaxxer.hikari.HikariDataSource;
 import hello.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
+import static hello.jdbc.connection.ConnectionConst.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Slf4j
 class MemberRepositoryV1Test {
 
-    MemberRepositoryV1 repository = new MemberRepositoryV0();
+    MemberRepositoryV1 repository;
+
+    @BeforeEach
+    void beforeEach() {
+        // 기본 DriverManager = 항상 새로운 커넥션을 획득
+        // DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
+        // repository = new MemberRepositoryV1(dataSource);
+
+        // 커넥션 풀링: HikariProxyConnection -> JdbcConnection
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(URL);
+        dataSource.setUsername(USERNAME);
+        dataSource.setPassword(PASSWORD);
+        repository = new MemberRepositoryV1(dataSource);
+
+        // 기본 DriverManager 클래스를 사용하면 항상 새로운 커넥션 풀이 생성되어 사용된다.
+        // 반면, 히카리풀은 생성된 커넥션을 보관하고 계속 사용함.
+        // DriverManager -> Hikari로 넘어간다하더라도 DataSource 인터페이스에 의존하고 있기때문에 기존 소스를 수정할 필요 없음.
+    }
 
     @Test
     void crud() throws SQLException {
@@ -46,5 +67,11 @@ class MemberRepositoryV1Test {
         // 해당 데이터가 없는 경우에는 NoSuchElementException 예외이용
         assertThatThrownBy(() -> repository.findById(member.getMemberId()))
                 .isInstanceOf(NoSuchElementException.class);
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

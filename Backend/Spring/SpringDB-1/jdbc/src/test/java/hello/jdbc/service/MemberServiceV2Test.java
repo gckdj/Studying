@@ -48,19 +48,26 @@ class MemberServiceV2Test {
 
         // given
         Member memberA = new Member(MEMBER_A, 10000);
-        Member memberEx = new Member(MEMBER_B, 10000);
+        Member memberEx = new Member(MEMBER_EX, 10000);
         memberRepository.save(memberA);
         memberRepository.save(memberEx);
 
         // when
         // 호출한 커넥션을 트랜잭션 내에서 유지하기 때문에 트랜잭션 중에 커넥션 호출은 딱 한번 이루어짐
-        memberService.accountTransfer(memberA.getMemberId(), memberEx.getMemberId(), 2000);
+        // memberService.accountTransfer(memberA.getMemberId(), memberEx.getMemberId(), 2000);
+
+        assertThatThrownBy(() -> memberService.accountTransfer(
+                memberA.getMemberId(), memberEx.getMemberId(), 2000))
+                .isInstanceOf(IllegalStateException.class);
 
         // then
         Member findMemberA = memberRepository.findById(memberA.getMemberId());
         Member findmemberEx = memberRepository.findById(memberEx.getMemberId());
 
-        assertThat(findMemberA.getMoney()).isEqualTo(8000);
-        assertThat(findmemberEx.getMoney()).isEqualTo(12000);
+        assertThat(findMemberA.getMoney()).isEqualTo(10000);
+        assertThat(findmemberEx.getMoney()).isEqualTo(10000);
+
+        // V1과 달리 의도적으로 예외를 터트려도 롤백되어 두 유저는 그대로 만원씩 보유
+        // 단점은, 트랜잭션을 유지하기 위한 코딩으로 서비스 복잡도 up
     }
 }

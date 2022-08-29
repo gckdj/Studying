@@ -2,6 +2,7 @@ package hello.jdbc.repository;
 
 import hello.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import javax.sql.DataSource;
@@ -99,25 +100,26 @@ public class MemberRepositoryV3 {
         }
    }
 
-    public void update(Connection con, String memberId, int money) throws SQLException {
+    public void update(String memberId, int money) throws SQLException {
         String sql = "update member set money = ? where member_id = ?";
 
+        Connection con = null;
         PreparedStatement pstmt = null;
 
         try {
+            con = getConnection();
+
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, money);
             pstmt.setString(2, memberId);
+
             int resultSize = pstmt.executeUpdate();
-
             log.info("resultSize = {}", resultSize);
-
         } catch (SQLException e) {
             log.error("db error", e);
             throw e;
-
         } finally {
-            JdbcUtils.closeStatement(pstmt);
+            close(con, pstmt, null);
         }
     }
 
@@ -142,13 +144,15 @@ public class MemberRepositoryV3 {
 
     private void close(Connection  con, Statement stmt, ResultSet rs) {
         JdbcUtils.closeResultSet(rs);
-        JdbcUtils.closeConnection(con);
         JdbcUtils.closeStatement(stmt);
+        // 트랙잭션 동기화를 사용하려면 DataSourceUtils를 사용해야 한다.
+        DataSourceUtils.releaseConnection(con, dataSource);
+        // JdbcUtils.closeConnection(con);
     }
 
     private Connection getConnection() throws SQLException {
-        Connection con = dataSource.getConnection();
-        log.info("get connection = {}, class = {}");
+        Connection con = DataSourceUtils.getConnection(dataSource);
+        log.info("get connection = {}, class = {}", con, con.getClass());
         return con;
     }
 }

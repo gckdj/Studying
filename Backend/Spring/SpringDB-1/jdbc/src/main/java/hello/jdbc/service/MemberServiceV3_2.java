@@ -4,39 +4,43 @@ import hello.jdbc.domain.Member;
 import hello.jdbc.repository.MemberRepositoryV3;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
-
 /*
-* 트랜잭션 - 파라미터 연동, 풀을 고려한 종료
+* 스프링 트랜잭션 템플릿 적용
 * */
 
 @RequiredArgsConstructor
 @Slf4j
-public class MemberServiceV3_1 {
+public class MemberServiceV3_2 {
 
+    private final TransactionTemplate txTemplate;
     private final MemberRepositoryV3 memberRepository;
-    private final PlatformTransactionManager transactionManager;
     // private final DataSource dataSource;
 
-    public void accountTransfer(String fromId, String toId, int money) throws SQLException {
-        // 트랜잭션 시작
-        TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
 
-        try {
-            bizLogic(fromId, toId, money);
-            transactionManager.commit(transactionStatus);
-        } catch (Exception e) {
-            transactionManager.rollback(transactionStatus);
-            throw new IllegalStateException(e);
-        }
-        // 트랜잭션매니저에 의해 릴리즈 역할까지 수행
+    public MemberServiceV3_2(PlatformTransactionManager transactionManager, MemberRepositoryV3 memberRepository) {
+        // 트랜잭션 템플릿에 트랜잭션 매니저로 생산한 객체를 주입해주면서 커밋 롤백이 매우 깔끔해짐.
+        this.txTemplate = new TransactionTemplate(transactionManager);
+        this.memberRepository = memberRepository;
+    }
+
+    public void accountTransfer(String fromId, String toId, int money) throws SQLException {
+
+        // 템플릿 내의 콜백함수로 감싸서 실행하면 템플릿 내의 로직을 수행하고 커밋, 롤백한다.
+        txTemplate.executeWithoutResult((status) -> {
+            // 비즈니스 로직
+            try {
+                bizLogic(fromId, toId, money);
+            } catch (SQLException e) {
+                throw new IllegalStateException(e);
+            }
+        });
     }
 
     private void bizLogic(String fromId, String toId, int money) throws SQLException {
@@ -55,4 +59,6 @@ public class MemberServiceV3_1 {
     }
     // 비즈니스 로직 외의 트랜잭션과 관련된 코드는 지속적으로 반복되고 있음
     // -> 스프링은 트랜잭션 템플릿으로 템플릿 콜백 패턴을 제공해주고 있다.
+    // but 트랙잭션 템플릿으로 로직을 간편하게 남기긴했지만 오직 로직만을 남기지만은 못했다.
+    // -> 트랜잭션 프록시 필요성
 }

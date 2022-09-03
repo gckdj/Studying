@@ -4,7 +4,6 @@ import hello.jdbc.domain.Member;
 import hello.jdbc.repository.MemberRepositoryV3;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * 트랜잭션 - @Transaction AOP 적용해보기
+ * 트랜잭션 - DataSource, Transaction 자동등록
  */
 @Slf4j
 @SpringBootTest
-class MemberServiceV3_3Test {
+class MemberServiceV3_4Test {
 
     public static final String MEMBER_A = "memberA";
     public static final String MEMBER_B = "memberEx";
@@ -41,35 +40,26 @@ class MemberServiceV3_3Test {
 
     @TestConfiguration
     static class TestConfig {
-        @Bean
-        DataSource dataSource() {
-            return new DriverManagerDataSource(URL, USERNAME, PASSWORD);
-        }
 
-        @Bean
-        PlatformTransactionManager transactionManager() {
-            return new DataSourceTransactionManager(dataSource());
+        private final DataSource dataSource;
+
+        public TestConfig(DataSource dataSource) {
+            this.dataSource = dataSource;
         }
 
         @Bean
         MemberRepositoryV3 memberRepositoryV3() {
-            return new MemberRepositoryV3(dataSource());
+            return new MemberRepositoryV3(dataSource);
         }
 
         @Bean
         MemberServiceV3_3 memberServiceV3_3() {
             return new MemberServiceV3_3(memberRepositoryV3());
         }
-    }
 
-    /*@BeforeEach
-    void before() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
-        memberRepository = new MemberRepositoryV3(dataSource);
-        memberService = new MemberServiceV3_3(memberRepository);
-        // 현재 상태로 테스트를 돌리면 오류발생 -> 스프링 컨테이너 없이 사용했기 때문임.(순수한 자바코드)
-        // 트랜잭션 AOP를 적용하기 위해서는 스프링 컨테이너에 빈으로 등록되어야 한다. @SpringBootTest
-    }*/
+        //2022-09-03 15:25:48.275  INFO 2232 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+        //2022-09-03 15:25:48.364  INFO 2232 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+    }
 
     @AfterEach
     void after() throws SQLException {
@@ -82,8 +72,6 @@ class MemberServiceV3_3Test {
     void AppCheck() {
         log.info("memberService class = {}", memberService.getClass());
         log.info("memberRepository class = {}", memberRepository.getClass());
-        //2022-09-02 23:29:39.813  INFO 7767 --- [           main] h.jdbc.service.MemberServiceV3_3Test     : memberService class = class hello.jdbc.service.MemberServiceV3_3$$EnhancerBySpringCGLIB$$bd8cd4d8
-        //2022-09-02 23:29:39.813  INFO 7767 --- [           main] h.jdbc.service.MemberServiceV3_3Test     : memberRepository class = class hello.jdbc.repository.MemberRepositoryV3
     }
 
     @Test
@@ -105,16 +93,4 @@ class MemberServiceV3_3Test {
         assertThat(findMemberA.getMoney()).isEqualTo(10000);
         assertThat(findmemberEx.getMoney()).isEqualTo(10000);
     }
-
-    // @Transactional 주석처리한다면 오류처리남 -> 트랜잭션이 적용이 안되어서 롤백처리가 안되었기 때문
-    
-    // 선언적 트랜잭션 vs 프로그래밍형 트랜잭션
-    // 레거시, 구시대의 프로그래밍은 프로그래밍형 트랜잭션을 했다.
-    // 실무는 99퍼센트가 선언적 트랜잭션
-    // 프로그래밍형 트랜잭션은 순수한 로직코드만을 유지하기 불가능
-
-    // 스프링부트 등장이전에는 데이터소스, 트랜잭션 매니저는 직접 스프링 빈으로 등록해서 사용했었다.
-    // 지금 스프링 프로젝트에서도 트랜잭션을 활용할 클래스를 xml에 명시했어야했음.
-
-    // 스프링부트에서는 프로퍼티에 명시해놓으면 히카리cp 를 기본제공
 }

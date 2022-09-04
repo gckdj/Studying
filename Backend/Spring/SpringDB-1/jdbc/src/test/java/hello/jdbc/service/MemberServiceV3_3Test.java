@@ -106,6 +106,8 @@ class MemberServiceV3_3Test {
         assertThat(findmemberEx.getMoney()).isEqualTo(10000);
     }
 
+
+
     // @Transactional 주석처리한다면 오류처리남 -> 트랜잭션이 적용이 안되어서 롤백처리가 안되었기 때문
     
     // 선언적 트랜잭션 vs 프로그래밍형 트랜잭션

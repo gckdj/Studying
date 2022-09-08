@@ -1,10 +1,15 @@
 package hello.jdbc.exception.translator;
 
+import hello.jdbc.connection.ConnectionConst;
+import hello.jdbc.connection.DBConnectionUtil;
 import hello.jdbc.domain.Member;
 import hello.jdbc.repository.ex.MyDbException;
 import hello.jdbc.repository.ex.MyDuplicateKeyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.support.JdbcUtils;
 
 import javax.sql.DataSource;
@@ -13,8 +18,27 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Random;
 
+import static hello.jdbc.connection.ConnectionConst.*;
+
 @Slf4j
 public class ExTranslatorV1Test {
+
+    Repository repository;
+    Service service;
+
+    @BeforeEach
+    void init() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
+        repository = new Repository(dataSource);
+        service = new Service(repository);
+    }
+
+    @Test
+    void duplicateKeySave() {
+        service.create("myId");
+        // 같은 ID 저장시도
+        service.create("myId");
+    }
 
     @Slf4j
     @RequiredArgsConstructor

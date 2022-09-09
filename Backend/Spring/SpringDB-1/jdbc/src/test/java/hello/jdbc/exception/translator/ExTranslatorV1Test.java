@@ -1,7 +1,5 @@
 package hello.jdbc.exception.translator;
 
-import hello.jdbc.connection.ConnectionConst;
-import hello.jdbc.connection.DBConnectionUtil;
 import hello.jdbc.domain.Member;
 import hello.jdbc.repository.ex.MyDbException;
 import hello.jdbc.repository.ex.MyDuplicateKeyException;
@@ -71,7 +69,7 @@ public class ExTranslatorV1Test {
         private final DataSource dataSource;
 
         public Member save(Member member) {
-            String sql = "insert into member(member_id, money) value (?, ?)";
+            String sql = "insert into member(member_id, money) values (?, ?)";
             Connection con = null;
             PreparedStatement pstmt = null;
 
@@ -88,10 +86,16 @@ public class ExTranslatorV1Test {
                 if (e.getErrorCode() == 23505) {
                     throw new MyDuplicateKeyException(e);
                 }
+                throw new MyDbException(e);
             } finally {
                 JdbcUtils.closeStatement(pstmt);
                 JdbcUtils.closeConnection(con);
             }
         }
     }
+
+    //14:15:21.297 [main] INFO hello.jdbc.exception.translator.ExTranslatorV1Test$Service - saveId = myId
+    //14:15:21.297 [main] DEBUG org.springframework.jdbc.datasource.DriverManagerDataSource - Creating new JDBC DriverManager Connection to [jdbc:h2:tcp://localhost/~/test]
+    //14:15:21.303 [main] INFO hello.jdbc.exception.translator.ExTranslatorV1Test$Service - 키 중복, 복구 시도
+    //14:15:21.305 [main] INFO hello.jdbc.exception.translator.ExTranslatorV1Test$Service - retryId = myId7124
 }

@@ -4,7 +4,9 @@ import hello.itemservice.domain.Item;
 import hello.itemservice.repository.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.util.ObjectUtils;
@@ -46,17 +48,46 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
     }
 
     @Override
-    public void update(Long itemId, ItemUpdateDto updateParam) {
-
-    }
-
-    @Override
     public Optional<Item> findById(Long id) {
-        return Optional.empty();
+        String sql = "select id, item_name, price, quantity where id = ?";
+        // queryForObject는 값이 없을 경우 예외가 발생
+        // dto 객체로 반환하는 기능
+        try {
+            Item item = template.queryForObject(sql, itemRowMapper(), id);
+            return Optional.of(item);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public List<Item> findAll(ItemSearchCond cond) {
-        return null;
+        String itemName = cond.getItemName();
+        Integer maxPrice = cond.getMaxPrice();
+        String sql = "select id, item_name, price, quantity from item";
+        return template.query(sql, itemRowMapper());
+    }
+
+    @Override
+    public void update(Long itemId, ItemUpdateDto updateParam) {
+        String sql = "update item set item_name = ?, price = ?, quantity = ? where id = ?";
+        template.update(sql,
+                updateParam.getItemName(),
+                updateParam.getPrice(),
+                updateParam.getQuantity(),
+                itemId);
+    }
+
+    // 데이터베이스 조회결과를 객체로 변환할때 사용
+    // Jdbc를 직접 이용할때의 ResultSet을 생각
+    private RowMapper<Item> itemRowMapper() {
+        return ((rs, rowNum) -> {
+            Item item = new Item();
+            item.setId(rs.getLong("id"));
+            item.setItemName(rs.getString("item_name"));
+            item.setPrice(rs.getInt("price"));
+            item.setQuantity(rs.getInt("quantity"));
+            return item;
+        });
     }
 }

@@ -8,30 +8,29 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
- * JdbcTemplate
+ * NamedParameterJdbcTemplate
  */
 
 @Slf4j
-public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
+public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
-    private final JdbcTemplate template;
+    // private final JdbcTemplate template;
+    private final NamedParameterJdbcTemplate template;
 
-    public JdbcTemplateItemRepositoryV1(DataSource dataSource) {
-        this.template = new JdbcTemplate(dataSource);
+    public JdbcTemplateItemRepositoryV2(DataSource dataSource) {
+        this.template = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override

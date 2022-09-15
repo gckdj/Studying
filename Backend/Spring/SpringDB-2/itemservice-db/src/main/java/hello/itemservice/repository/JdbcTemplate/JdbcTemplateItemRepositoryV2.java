@@ -6,9 +6,13 @@ import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.util.StringUtils;
@@ -17,10 +21,17 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * NamedParameterJdbcTemplate
+ * SqlParameterSource
+ * - BeanPropertySqlParameterSource
+ * - MapSqlParameterSource
+ * - Map
+ *
+ * BeanPropertyRowMapper
  */
 
 @Slf4j
@@ -35,17 +46,16 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
     @Override
     public Item save(Item item) {
-        String sql = "insert into item(item_name, price, quantity) values (?, ?, ?)";
+        String sql = "insert into item(item_name, price, quantity) values " +
+                // ?, ?, ? 같은 순서기반 파라미터 X
+                "(:itemName, :price, :quantity)";
 
+        // 매개변수로 넘어간 객체를 파라미러로 사용
+        SqlParameterSource param = new BeanPropertySqlParameterSource(item);
+
+        // KeyHolder는 auto increment로 생성되는 디비상의 키값을 쿼리실행 이후 가지고 있고 개발자가 다시 사용할 수 있게 해준다.
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        template.update(connection -> {
-            // 자동 증가 키
-            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
-            ps.setString(1, item.getItemName());
-            ps.setInt(2, item.getPrice());
-            ps.setInt(3, item.getQuantity());
-            return ps;
-        }, keyHolder);
+        template.update(sql, param, keyHolder);
 
         long key = keyHolder.getKey().longValue();
         item.setId(key);
@@ -54,11 +64,11 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
 
     @Override
     public Optional<Item> findById(Long id) {
-        String sql = "select id, item_name, price, quantity from item where id = ?";
-        // queryForObject는 값이 없을 경우 예외가 발생
-        // dto 객체로 반환하는 기능
+        String sql = "select id, item_name, price, quantity from item where id = :id";
         try {
-            Item item = template.queryForObject(sql, itemRowMapper(), id);
+            // 순수 자바 문법으로 파람을 넣어주는 방법
+            Map<String, Object> param = Map.of("id", id);
+            Item item = template.queryForObject(sql, param, itemRowMapper());
             return Optional.of(item);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -69,21 +79,16 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
     public List<Item> findAll(ItemSearchCond cond) {
         String itemName = cond.getItemName();
         Integer maxPrice = cond.getMaxPrice();
-        String sql = "select id, item_name, price, quantity from item";
+        BeanPropertySqlParameterSource param = new BeanPropertySqlParameterSource(cond);
 
-        // 동적쿼리
-        // 상품명이나 최대가격이 설정되었는지 확인
+        String sql = "select id, item_name, price, quantity from item";
         if (StringUtils.hasText(itemName) || maxPrice != null) {
             sql += " where";
         }
 
-        // 상품명 sql 등록여부 확인 -> 있다면 and 추가
         boolean andFlag = false;
-        List<Object> param = new ArrayList<>();
-
         if (StringUtils.hasText(itemName)) {
-            sql += " item_name like concat('%', ?, '%')";
-            param.add(itemName);
+            sql += " item_name like concat('%', :itemName, '%')";
             andFlag = true;
         }
 
@@ -91,35 +96,31 @@ public class JdbcTemplateItemRepositoryV2 implements ItemRepository {
             if (andFlag) {
                 sql += " and";
             }
-
-            sql += " price <= ?";
-            param.add(maxPrice);
+            sql += " price <= :maxPrice";
         }
-
         log.info("sql = {}", sql);
-        return template.query(sql, itemRowMapper());
+        return template.query(sql, param, itemRowMapper());
     }
 
     @Override
     public void update(Long itemId, ItemUpdateDto updateParam) {
-        String sql = "update item set item_name = ?, price = ?, quantity = ? where id = ?";
-        template.update(sql,
-                updateParam.getItemName(),
-                updateParam.getPrice(),
-                updateParam.getQuantity(),
-                itemId);
+        String sql = "update item" +
+                " set item_name = :itemName, price = :price, quantity = :quantity where " +
+                "id = ?";
+
+        // SqlParameterSource : 쿼리에 사용되는 파라미터를 담는 인터페이스
+        SqlParameterSource mapSqlParameterSource = new MapSqlParameterSource()
+                .addValue("itemName", updateParam.getItemName())
+                .addValue("price", updateParam.getPrice())
+                .addValue("quantity", updateParam.getQuantity())
+                .addValue("id", itemId);
+
+        template.update(sql, mapSqlParameterSource);
+
     }
 
-    // 데이터베이스 조회결과를 객체로 변환할때 사용
-    // Jdbc를 직접 이용할때의 ResultSet을 생각
     private RowMapper<Item> itemRowMapper() {
-        return ((rs, rowNum) -> {
-            Item item = new Item();
-            item.setId(rs.getLong("id"));
-            item.setItemName(rs.getString("item_name"));
-            item.setPrice(rs.getInt("price"));
-            item.setQuantity(rs.getInt("quantity"));
-            return item;
-        });
+        // BeanPropertyRowMapper : 반환할 객체에 맞춰서 매핑된 값을 반환(스프링 제공)
+        return BeanPropertyRowMapper.newInstance(Item.class);
     }
 }

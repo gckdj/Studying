@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+// 자신 상위의 @SpringBootApplication을 탐색, 사용
 @SpringBootTest
 class ItemRepositoryTest {
 
@@ -89,4 +90,6 @@ class ItemRepositoryTest {
         List<Item> result = itemRepository.findAll(new ItemSearchCond(itemName, maxPrice));
         assertThat(result).containsExactly(items);
     }
+
+    // 디비에 실제 사용하고 있는 데이터가 있어서 테스트가 실패하는 상황
 }

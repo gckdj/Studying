@@ -34,8 +34,8 @@ public class JdbcTemplateItemRepositoryV3 implements ItemRepository {
         this.template = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("item")
-                .usingGeneratedKeyColumns("id")
-                .usingColumns("item_name", "price", "quantity"); // 생략가능
+                .usingGeneratedKeyColumns("id");
+                // .usingColumns("item_name", "price", "quantity"); 생략가능
     }
 
     // SimpleJdbcInsert는 Insert에서만 사용

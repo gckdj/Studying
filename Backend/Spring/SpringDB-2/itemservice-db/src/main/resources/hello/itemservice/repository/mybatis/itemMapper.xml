@@ -28,12 +28,14 @@
     <select id="findAll" resultType="Item">
         select id, item_name, price, quantity
         from item
+--      where 태그는 내부조건이 일치하는 경우에 where 문을 처리해준다.
+--      선행된 where가 없는 경우에는 and 문을 제거한다.
         <where>
             <if test="itemName != null and itemName != ''">
                 and item_name like concat('%', #{itemName}, '%')
             </if>
             <if test="maxPrice != null">
-                and price $lt;= #{maxPrice}
+                and price &lt;= #{maxPrice}
             </if>
         </where>
     </select>

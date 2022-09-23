@@ -16,6 +16,15 @@ import java.util.Optional;
 
 @Slf4j
 @Repository
+// @Repository 주석 O
+// java.lang.IllegalArgumentException: org.hibernate.hql.internal.ast.QuerySyntaxException: unexpected token: selectxxx near line 1, column 1 [selectxxx i from hello.itemservice.domain.Item i]
+
+// @Repository 주석 X
+// org.springframework.dao.InvalidDataAccessApiUsageException: org.hibernate.hql.internal.ast.QuerySyntaxException: unexpected token: selectxxx near line 1, column 1 [selectxxx i from hello.itemservice.domain.Item i]; nested exception is java.lang.IllegalArgumentException: org.hibernate.hql.internal.ast.QuerySyntaxException: unexpected token: selectxxx near line 1, column 1 [selectxxx i from hello.itemservice.domain.Item i]
+
+// @Repository가 있으면 예외변한 AOP의 대상이 된다.
+// JPA 예외를 스프링 예외로 추상화하고 예외를 서비스 계층으로 전달
+
 // JPA에서는 트랜잭셔널 항상 필요하다고 생각
 @Transactional
 public class JpaItemRepositoryV1 implements ItemRepository {

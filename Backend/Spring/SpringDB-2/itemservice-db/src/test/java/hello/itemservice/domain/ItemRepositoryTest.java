@@ -4,6 +4,7 @@ import hello.itemservice.repository.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Slf4j
 // 일일이 롤백 달아서 처리하는 수고로움 해결
 // 원래는 로직이 성공적으로 수행되면 커밋해야되지만, 테스트에서는 한정적으로 테스트가 '종료'되면 롤백 시켜버린다.
 @Transactional
@@ -88,6 +89,9 @@ class ItemRepositoryTest {
         Item item1 = new Item("itemA-1", 10000, 10);
         Item item2 = new Item("itemA-2", 20000, 20);
         Item item3 = new Item("itemB-1", 30000, 30);
+
+        log.info("repository = {}", itemRepository.getClass());
+        // repository = class hello.itemservice.repository.jpa.JpaItemRepositoryV1$$EnhancerBySpringCGLIB$$deb34819
 
         itemRepository.save(item1);
         itemRepository.save(item2);

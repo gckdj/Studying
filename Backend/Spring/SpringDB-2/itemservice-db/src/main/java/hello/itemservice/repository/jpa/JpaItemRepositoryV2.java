@@ -7,6 +7,7 @@ import hello.itemservice.repository.ItemUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +26,33 @@ public class JpaItemRepositoryV2 implements ItemRepository {
 
     @Override
     public void update(Long itemId, ItemUpdateDto updateParam) {
-
+        Item findItem = repository.findById(itemId).orElseThrow();
+        findItem.setItemName(updateParam.getItemName());
+        findItem.setPrice(updateParam.getPrice());
+        findItem.setQuantity(updateParam.getQuantity());
     }
 
     @Override
     public Optional<Item> findById(Long id) {
-         
-        return Optional.empty();
+        return repository.findById(id);
     }
 
     @Override
     public List<Item> findAll(ItemSearchCond cond) {
-        return null;
+        String itemName = cond.getItemName();
+        Integer maxPrice = cond.getMaxPrice();
+
+        System.out.println(itemName);
+
+        if (StringUtils.hasText(itemName) && maxPrice != null) {
+            // return repository.findByItemNameLikeAndPriceLessThanEqual(itemName, maxPrice);
+            return repository.findItems(itemName, maxPrice);
+        } else if (StringUtils.hasText(itemName)) {
+            return repository.findByItemNameLike(itemName);
+        } else if (maxPrice != null) {
+            return repository.findByPriceLessThanEqual(maxPrice);
+        } else {
+            return repository.findAll();
+        }
     }
 }

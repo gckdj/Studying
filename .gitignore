@@ -261,3 +261,4 @@ Backend/toy/gcbot/config.json
 Backend/.DS_Store
 Backend/Spring/.DS_Store
 Backend/Spring/SpringDB-2/.DS_Store
+Backend/Spring/SpringDB-2/itemservice-db/src/main/generated/hello/itemservice/domain/QItem.java

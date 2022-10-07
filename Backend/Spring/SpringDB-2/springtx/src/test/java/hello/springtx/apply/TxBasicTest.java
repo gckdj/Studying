@@ -1,7 +1,6 @@
 package hello.springtx.apply;
 
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,18 @@ public class TxBasicTest {
     void proxyCheck() {
         log.info("aop class = {}", basicService.getClass());
         assertThat(AopUtils.isAopProxy(basicService)).isTrue();
-    } 
+    }
+
+    @Test
+    void txTest() {
+        basicService.tx();
+        basicService.nonTx();
+    }
+
+    //2022-10-07 23:18:56.975  INFO 11409 --- [           main] h.s.apply.TxBasicTest$BasicService       : call tx
+    //2022-10-07 23:18:56.975  INFO 11409 --- [           main] h.s.apply.TxBasicTest$BasicService       : tx active = true
+    //2022-10-07 23:18:56.976  INFO 11409 --- [           main] h.s.apply.TxBasicTest$BasicService       : call nonTx
+    //2022-10-07 23:18:56.976  INFO 11409 --- [           main] h.s.apply.TxBasicTest$BasicService       : tx active = false
 
     @TestConfiguration
     static class TxApplyBasicConfig {

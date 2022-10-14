@@ -54,4 +54,21 @@ public class BasicTxTest {
         log.info("트랜잭션 커밋 완료");
         //2022-10-12 21:33:51.029  INFO 2695 --- [           main] hello.springtx.propagation.BasicTxTest   : 트랜잭션 커밋 완료
     }
+
+    @Test
+    void double_commit() {
+        log.info("트랜잭션1 시작");
+        TransactionStatus tx1 = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("트랜잭션1 커밋");
+        txManager.commit(tx1);
+
+        log.info("트랜잭션2 시작");
+        TransactionStatus tx2 = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("트랜잭션2 커밋");
+        // txManager.commit(tx2);
+        txManager.rollback(tx2);
+
+        //2022-10-14 23:13:27.905 DEBUG 3097 --- [           main] o.s.j.d.DataSourceTransactionManager     : Releasing JDBC Connection [HikariProxyConnection@1247783800 wrapping conn0: url=jdbc:h2:mem:eb2fc3e5-3c1c-4e55-9ab9-9b51412741e3 user=SA] after transaction
+        //2022-10-14 23:13:27.906 DEBUG 3097 --- [           main] o.s.j.d.DataSourceTransactionManager     : Switching JDBC Connection [HikariProxyConnection@1286393023 wrapping conn0: url=jdbc:h2:mem:eb2fc3e5-3c1c-4e55-9ab9-9b51412741e3 user=SA] to manual commit
+    }
 }

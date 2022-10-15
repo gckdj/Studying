@@ -71,4 +71,30 @@ public class BasicTxTest {
         //2022-10-14 23:13:27.905 DEBUG 3097 --- [           main] o.s.j.d.DataSourceTransactionManager     : Releasing JDBC Connection [HikariProxyConnection@1247783800 wrapping conn0: url=jdbc:h2:mem:eb2fc3e5-3c1c-4e55-9ab9-9b51412741e3 user=SA] after transaction
         //2022-10-14 23:13:27.906 DEBUG 3097 --- [           main] o.s.j.d.DataSourceTransactionManager     : Switching JDBC Connection [HikariProxyConnection@1286393023 wrapping conn0: url=jdbc:h2:mem:eb2fc3e5-3c1c-4e55-9ab9-9b51412741e3 user=SA] to manual commit
     }
+
+    @Test
+    void inner_commit() {
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("outer.isNewTransaction() = {}", outer.isNewTransaction());
+
+        // 외부에서 시작된 트랜잭션이 내부 트랜잭션까지 묶는다.
+        inner();
+        //2022-10-15 23:47:57.935 DEBUG 4292 --- [           main] o.s.j.d.DataSourceTransactionManager     : Participating in existing transaction
+        //2022-10-15 23:46:48.064  INFO 4241 --- [           main] hello.springtx.propagation.BasicTxTest   : inner.isNewTransaction() = false
+
+        log.info("외부 트랜잭션 커밋");
+        txManager.commit(outer);
+        //2022-10-15 23:47:57.935 DEBUG 4292 --- [           main] o.s.j.d.DataSourceTransactionManager     : Initiating transaction commit
+    }
+
+    private void inner() {
+        log.info("내부 트랜잭션 시작");
+        TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("inner.isNewTransaction() = {}", inner.isNewTransaction());
+        log.info("내부 트랜잭션 커밋");
+
+        // 하나의 트랜잭션으로 묶여서 커밋 코드가 있어도 커밋하지 않는다.
+        txManager.commit(inner);
+    }
 }

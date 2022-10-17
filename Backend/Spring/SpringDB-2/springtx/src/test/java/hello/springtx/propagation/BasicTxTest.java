@@ -146,20 +146,24 @@ public class BasicTxTest {
     @Test
     void inner_rollback_requires_new() {
         log.info("외부 트랜잭션 시작");
+        // conn0 사용
         TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
         log.info("outer.isNewTransaction() = {}", outer.isNewTransaction());
 
         log.info("내부 트랜잭션 시작");
         DefaultTransactionAttribute definition = new DefaultTransactionAttribute();
         // 항상 새로운 트랜잭션을 만드는 설정 : PROPAGATION_REQUIRES_NEW
+        // conn1 사용
         definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         TransactionStatus inner = txManager.getTransaction(definition);
         log.info("inner.isNewTransaction() = {}", inner.isNewTransaction());
 
         log.info("내부 트랜잭션 롤백");
+        // conn1이 롤백되고, 풀은 반납된다.
         txManager.rollback(inner);
 
         log.info("외부 트랜잭션 커밋");
+        // conn0은 트랜잭션이 살아있고 readOnly 설정을 확인하고, 커밋한다.
         txManager.commit(outer);
 
         // 내부 트랜잭션이 롤백되더라도 외부에서는 커밋처리된다.

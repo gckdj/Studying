@@ -91,4 +91,41 @@ class MemberServiceTest {
 
         // 서비스에서 트랜잭션을 걸면 하위에서 실행되는 로직은 모두 서비스에서 시작한 트랜잭션에 묶인다.
     }
+
+    /*
+     * memberService     @Transaction : ON
+     * memberRepository  @Transaction : ON
+     * logRepository     @Transaction : ON Exception
+     */
+    @Test
+    void outerTxOn_fail() {
+        String username = "로그예외_outerTxOn_fail";
+
+        assertThatThrownBy(() -> memberService.joinV1(username))
+                .isInstanceOf(RuntimeException.class);
+
+        // 리포지토리에 존재하는 트랜잭션에 참여, 런타임예외 발생 후 참여하고 있는 트랜잭션에 리드온리 마킹
+        // 2022-10-20 19:22:12.185 DEBUG 1295 --- [           main] cResourceLocalTransactionCoordinatorImpl : JDBC transaction marked for rollback-only (exception provided for stack trace)
+        // 서비스에서는 넘어온 예외를 확인하고 물리 트랜잭션을 롤백
+        assertTrue(memberRepository.find(username).isEmpty());
+        assertTrue(logRepository.find(username).isEmpty());
+    }
+
+    /*
+     * memberService     @Transaction : ON
+     * memberRepository  @Transaction : ON
+     * logRepository     @Transaction : ON(REQUIRES_NEW) Exception
+     */
+    @Test
+    void recoverException_success() {
+        String username = "로그예외_recoverException_success";
+
+        memberService.joinV2(username);
+
+        // 멤버 커밋, 로그 롤백
+        // REQUIRES_NEW는 항상 새로운 트랜잭션을 생성.. 물리 트랜잭션이 분리되었음.
+        // 로그 리포지토리에서 롤백이 되더라도 멤버는 그대로 커밋
+        assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isEmpty());
+    }
 }

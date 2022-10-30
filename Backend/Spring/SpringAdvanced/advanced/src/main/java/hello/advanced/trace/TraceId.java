@@ -18,18 +18,18 @@ public class TraceId {
         this.level = level;
     }
 
-    private String createId() {
+    public String createId() {
         // 생성된 uuid 중 앞 8자리만 사용
         // 트랜잭션 아이디가 중복될 수는 있으나 그럴 확률은 매우적고, 중복된다하더라도 큰 문제는 없는 상황
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
-    private TraceId createNextId() {
+    public TraceId createNextId() {
         // 같은 트레이스 아이디를 추적하고, 레벨만 올려주는 메서드
         return new TraceId(id, level + 1);
     }
 
-    private TraceId createPreviousId() {
+    public TraceId createPreviousId() {
         return new TraceId(id, level - 1);
     }
 

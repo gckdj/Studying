@@ -23,22 +23,21 @@ public class ThreadLocalLogTrace implements LogTrace {
     }
 
     private void syncTraceId() {
-
         TraceId traceId = traceIdHolder.get();
         if (traceId == null) {
             traceIdHolder.set(new TraceId());
         } else {
-            traceIdHolder.set(traceIdHolder.createNextId());
+            traceIdHolder.set(traceId.createNextId());
         }
     }
 
-    // 로그레벨 감소
     public void releaseTraceId() {
-        // 로그레벨이 감소 중 첫번째 레벨임이 확인되면 아이디제거
-        if (traceIdHolder.isFirstLevel()) {
-            traceIdHolder = null; // destroy
+        TraceId traceId = traceIdHolder.get();
+        if (traceId.isFirstLevel()) {
+            // 쓰레드 로컬에 저장된 값 중에 필요없어진 값들은 반드시 제거해줘야한다.
+            traceIdHolder.remove();
         } else {
-            traceIdHolder = traceIdHolder.createPreviousId();
+            traceIdHolder.set(traceId.createPreviousId());
         }
     }
 

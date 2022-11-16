@@ -1,6 +1,6 @@
-package hello.advanced.trace.threadlocal;
+package hello.advanced.trace.hellotrace.threadlocal;
 
-import hello.advanced.trace.threadlocal.code.ThreadLocalService;
+import hello.advanced.trace.hellotrace.threadlocal.code.ThreadLocalService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 

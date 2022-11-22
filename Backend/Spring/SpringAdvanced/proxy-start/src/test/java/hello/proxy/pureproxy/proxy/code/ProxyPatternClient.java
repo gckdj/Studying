@@ -9,6 +9,6 @@ public class ProxyPatternClient {
     }
 
     public void execute() {
-        subject.opration();
+        subject.operation();
     }
 }

@@ -1,9 +1,6 @@
 package hello.proxy.pureproxy.decorator;
 
-import hello.proxy.pureproxy.decorator.code.Component;
-import hello.proxy.pureproxy.decorator.code.DecoratorPatterClient;
-import hello.proxy.pureproxy.decorator.code.MessageDecorator;
-import hello.proxy.pureproxy.decorator.code.RealComponent;
+import hello.proxy.pureproxy.decorator.code.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +29,16 @@ class DecoratorPatterTest {
         //23:48:04.954 [main] INFO hello.proxy.pureproxy.decorator.code.RealComponent - RealComponent 실행
         //23:48:04.958 [main] INFO hello.proxy.pureproxy.decorator.code.MessageDecorator - MessageDecorator 꾸미기 적용 전 = data, 적용 후 = *****data*****
         //23:48:04.960 [main] INFO hello.proxy.pureproxy.decorator.code.DecoratorPatterClient - result = *****data*****
+    }
+
+    @Test
+    void decorator2() {
+        Component realComponent = new RealComponent();
+        Component messageDecorator = new MessageDecorator(realComponent);
+        // 로직 실행시간 로깅데코
+        Component timeDecorator = new TimeDecorator(messageDecorator);
+        DecoratorPatterClient client = new DecoratorPatterClient(timeDecorator);
+
+        client.execute();
     }
 }

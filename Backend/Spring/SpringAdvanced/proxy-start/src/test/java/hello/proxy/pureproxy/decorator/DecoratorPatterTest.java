@@ -10,17 +10,17 @@ class DecoratorPatterTest {
     @Test
     void noDecorator() {
         Component realComponent = new RealComponent();
-        DecoratorPatterClient client = new DecoratorPatterClient(realComponent);
+        DecoratorPatternClient client = new DecoratorPatternClient(realComponent);
         client.execute();
     }
-
+    
     @Test
     void decorator1() {
         Component realComponent = new RealComponent();
         // MessageDecorator -> 주입된 원 컴포넌트 값을 꾸며서 값을 반환
         Component messageDecorator = new MessageDecorator(realComponent);
         // 꾸며진 컴포넌트 값이 result로 반환됨
-        DecoratorPatterClient client = new DecoratorPatterClient(messageDecorator);
+        DecoratorPatternClient client = new DecoratorPatternClient(messageDecorator);
 
         client.execute();
 
@@ -37,7 +37,7 @@ class DecoratorPatterTest {
         Component messageDecorator = new MessageDecorator(realComponent);
         // 로직 실행시간 로깅데코
         Component timeDecorator = new TimeDecorator(messageDecorator);
-        DecoratorPatterClient client = new DecoratorPatterClient(timeDecorator);
+        DecoratorPatternClient client = new DecoratorPatternClient(timeDecorator);
 
         client.execute();
     }

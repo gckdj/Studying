@@ -11,18 +11,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class InterfaceProxyConfig {
 
+    // 스프링 빈에 실제 객체인스턴스 X
+    // 프록시 객체에 객체인스턴스를 주입하고 프록시 객체를 스프링 빈으로 관리
     @Bean
     public OrderControllerV1 orderController(LogTrace logTrace) {
-        OrderControllerInterfaceProxy serviceImpl = new OrderControllerInterfaceProxy();
-        return new OrderControllerInterfaceProxy(serviceImpl, logTrace);
+        OrderControllerV1Impl controllerImpl = new OrderControllerV1Impl(orderService(logTrace));
+        return new OrderControllerInterfaceProxy(controllerImpl, logTrace);
     }
 
-    private OrderServiceV1 orderService(LogTrace logTrace) {
+    @Bean
+    public OrderServiceV1 orderService(LogTrace logTrace) {
         OrderServiceV1Impl serviceImpl = new OrderServiceV1Impl(orderRepository(logTrace));
         return new OrderServiceInterfaceProxy(serviceImpl, logTrace);
     }
 
-    private OrderRepositoryV1 orderRepository(LogTrace logTrace) {
+    @Bean
+    public OrderRepositoryV1 orderRepository(LogTrace logTrace) {
         OrderRepositoryV1Impl repositoryImpl = new OrderRepositoryV1Impl();
         return new OrderRepositoryInterfaceProxy(repositoryImpl, logTrace);
     }

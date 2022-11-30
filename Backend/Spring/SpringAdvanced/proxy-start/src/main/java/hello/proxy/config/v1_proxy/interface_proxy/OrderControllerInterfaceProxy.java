@@ -17,7 +17,7 @@ public class OrderControllerInterfaceProxy  implements OrderControllerV1 {
         TraceStatus status = null;
 
         try {
-            status = logTrace.begin("OrderRepository.request()");
+            status = logTrace.begin("OrderController.request()");
             String result = target.request(itemId);
             logTrace.end(status);
             return result;

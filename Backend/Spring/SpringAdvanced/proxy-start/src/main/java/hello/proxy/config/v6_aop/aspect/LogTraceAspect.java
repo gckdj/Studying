@@ -7,8 +7,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-import java.lang.reflect.Method;
-
 @Aspect
 @Slf4j
 public class LogTraceAspect {

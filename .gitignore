@@ -262,3 +262,9 @@ Backend/.DS_Store
 Backend/Spring/.DS_Store
 Backend/Spring/SpringDB-2/.DS_Store
 Backend/Spring/SpringDB-2/itemservice-db/src/main/generated/hello/itemservice/domain/QItem.java
+*.gradle
+Backend/Spring/SpringAdvanced/aop/gradle/wrapper/gradle-wrapper.jar
+Backend/Spring/SpringAdvanced/aop/gradle/wrapper/gradle-wrapper.properties
+Backend/Spring/SpringAdvanced/aop/gradlew
+Backend/Spring/SpringAdvanced/aop/gradlew.bat
+Backend/Spring/SpringAdvanced/aop/gradle/wrapper/gradle-wrapper.jar

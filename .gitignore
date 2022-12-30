@@ -268,3 +268,4 @@ Backend/Spring/SpringAdvanced/aop/gradle/wrapper/gradle-wrapper.properties
 Backend/Spring/SpringAdvanced/aop/gradlew
 Backend/Spring/SpringAdvanced/aop/gradlew.bat
 Backend/Spring/SpringAdvanced/aop/gradle/wrapper/gradle-wrapper.jar
+*.jar

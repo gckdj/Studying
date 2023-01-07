@@ -129,7 +129,31 @@ public class ExecutionTest {
     // (String)
     @Test
     void argsMatch() {
-        pointcut.setExpression("execution(* hello.aop.member.MemberService.*(..))");
+        pointcut.setExpression("execution(* *(String))");
+        assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
+    }
+
+    // 파라미터 없음
+    // String 타입존재 -> false
+    @Test
+    void argsMatchNoArgs() {
+        pointcut.setExpression("execution(* *())");
+        assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isFalse();
+    }
+
+    // 숫자 무관 모든 파라미터, 타입 허용
+    // (), (Xxx), (Xxx, Xxx)
+    @Test
+    void argsMatchStar() {
+        pointcut.setExpression("execution(* *(..))");
+        assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
+    }
+
+    // String 시작, 숫자 무관 모든 파라미터, 타입 허용
+    // (String), (String, Xxx), (String, Xxx, Xxx)
+    @Test
+    void argsMatchComplex() {
+        pointcut.setExpression("execution(* *(String, ..))");
         assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
     }
 }

@@ -33,5 +33,11 @@ public class ProxyDITest {
         log.info("memberServiceImpl class={}", memberServiceImpl.getClass());
         memberServiceImpl.hello("hello");
     }
+
+
+    // CGLIB 한계 및 스프링의 대안
+    // 한계점: 생성자 2번 호출 (1. target 인스턴스 생성 2. 프록시객체 생성 시 부모클래스 생성자호출[자바])
+    // 대안: 스프링 4.0 기본 패키지 'objenesis' -> 생성자 호출없이 프록시객체 생성
+    // 최종: 스프링부트 2.0 이후 프록시 기본값에 CGLIB 채택
 }
 

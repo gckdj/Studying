@@ -269,3 +269,13 @@ Backend/Spring/SpringAdvanced/aop/gradlew
 Backend/Spring/SpringAdvanced/aop/gradlew.bat
 Backend/Spring/SpringAdvanced/aop/gradle/wrapper/gradle-wrapper.jar
 *.jar
+Backend/JPA/hello-jpa/.idea/compiler.xml
+Backend/JPA/hello-jpa/.idea/encodings.xml
+Backend/JPA/hello-jpa/.idea/jarRepositories.xml
+Backend/JPA/hello-jpa/.idea/jpa-buddy.xml
+Backend/JPA/hello-jpa/.idea/misc.xml
+Backend/JPA/hello-jpa/.idea/vcs.xml
+Backend/JPA/untitled/.idea/jpa-buddy.xml
+Backend/JPA/untitled/.idea/misc.xml
+Backend/JPA/untitled/.idea/vcs.xml
+Backend/JPA/untitled/.idea/workspace.xml

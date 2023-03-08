@@ -279,3 +279,7 @@ Backend/JPA/untitled/.idea/jpa-buddy.xml
 Backend/JPA/untitled/.idea/misc.xml
 Backend/JPA/untitled/.idea/vcs.xml
 Backend/JPA/untitled/.idea/workspace.xml
+*.class
+Backend/JPA/hello-jpa/target/classes/META-INF/orm.xml
+Backend/JPA/hello-jpa/target/classes/META-INF/persistence.xml
+Backend/JPA/hello-jpa/.idea/inspectionProfiles/Project_Default.xml

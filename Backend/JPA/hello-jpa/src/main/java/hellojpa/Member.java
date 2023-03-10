@@ -13,6 +13,16 @@ public class Member {
     @Id
     private Long id;
 
+    // JPA를 위한 기본 생성자
+    public Member() {
+
+    }
+
+    public Member(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     // 컬럼명과 속성값이 다르면
     // @Column(name = username)
     private String name;

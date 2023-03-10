@@ -52,7 +52,7 @@ public class JpaMain {
             }*/
 
             // 비영속
-            Member member = new Member();
+            /*Member member = new Member();
             member.setId(101L);
             member.setName("HelloJPA");
 
@@ -71,7 +71,18 @@ public class JpaMain {
             Member anotherFindMember = em.find(Member.class, 101L);
 
             // result = true
-            System.out.println("result = " + (findMember == anotherFindMember));
+            System.out.println("result = " + (findMember == anotherFindMember));*/
+
+            // 영속
+            Member member1 = new Member(150L, "A");
+            Member member2 = new Member(160L, "B");
+
+            // 영속성 컨텍스트에 저장
+            // batch_size -> 쿼리를 날리기 이전 모으는 기준점 설정 -> JPA를 잘 활용하면 성능적 이점을 가질 수 있다.
+            em.persist(member1);
+            em.persist(member2);
+
+            System.out.println("===== 쿼리 기준점 =====");
 
             // 영속시점 -> 실제 데이터베이스 영향 X
             // 커밋시점 -> 영향 O

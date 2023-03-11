@@ -74,7 +74,7 @@ public class JpaMain {
             System.out.println("result = " + (findMember == anotherFindMember));*/
 
             // 영속
-            Member member1 = new Member(150L, "A");
+            /*Member member1 = new Member(150L, "A");
             Member member2 = new Member(160L, "B");
 
             // 영속성 컨텍스트에 저장
@@ -83,11 +83,36 @@ public class JpaMain {
             em.persist(member2);
 
             System.out.println("===== 쿼리 기준점 =====");
-
+            */
             // 영속시점 -> 실제 데이터베이스 영향 X
             // 커밋시점 -> 영향 O
-            tx.commit();
 
+            /*Member member = em.find(Member.class, 150L);
+            member.setName("zzzz");*/
+            // JPA 영속성 컨텍스트는 객체의 값이 변경되면 감지 및 자체 업데이트 처리
+
+            // flush 영속성 컨텍스트와 데이터베이스 동기화(영속성 컨텍스트가 초기화되는 것은 아님)
+            /*Member member = new Member(200L, "member200");
+            em.persist(member);
+            em.flush();*/
+
+            // Member member = new Member(200L, "member200");
+            // member.setName("TESTTEST");
+
+            // 영속성 컨텍스트에서 객체제외(커밋시 제외)
+            // em.detach(member);
+            // 컨텍스트 초기화
+            // em.clear();
+
+            Member member = new Member();
+            member.setId(1L);
+            member.setUsername("A");
+            member.setRoleType(RoleType.USER);
+
+            em.persist(member);
+            System.out.println("===== 쿼리 기준점 =====");
+
+            tx.commit();
         } catch (Exception e) {
             tx.rollback();
         } finally {

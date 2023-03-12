@@ -104,12 +104,19 @@ public class JpaMain {
             // 컨텍스트 초기화
             // em.clear();
 
-            Member member = new Member();
+            /*Member member = new Member();
             member.setId(1L);
             member.setUsername("A");
             member.setRoleType(RoleType.USER);
 
+            em.persist(member);out*/
+
+            Member member = new Member();
+            member.setUsername("C");
+            System.out.println("===== 쿼리 기준점 =====");
+
             em.persist(member);
+            System.out.println("member.id = " + member.getId());
             System.out.println("===== 쿼리 기준점 =====");
 
             tx.commit();

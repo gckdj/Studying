@@ -9,13 +9,27 @@ import java.util.Date;
 @Entity
 // 테이블과 클래스명이 다르면
 // @Table(name = User)
+@SequenceGenerator(
+        name = "MEMBER_SEQ_GENERATOR",
+        sequenceName = "MEMBER_SEQ",
+        initialValue = 1,
+        allocationSize = 1
+)
+// @TableGenerator(
+//        name = "MEMBER_SEQ_GENERATOR",
+//        table = "MY_SEQUENCES",
+//        pkColumnValue = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
 
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "MEMBER_SEQ_GENERATOR"
+    )
     private Long id;
 
     // 컬럼과 속성명이 다를경우 사용
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String username;
 
     private Integer age;

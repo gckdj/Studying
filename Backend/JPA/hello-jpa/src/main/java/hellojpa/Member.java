@@ -15,6 +15,7 @@ import java.util.Date;
         initialValue = 1,
         allocationSize = 1
 )
+// allocationSize => 시퀀스 사전확보, 생성된 이전의 시퀀스는 메모리에서 사용
 // @TableGenerator(
 //        name = "MEMBER_SEQ_GENERATOR",
 //        table = "MY_SEQUENCES",

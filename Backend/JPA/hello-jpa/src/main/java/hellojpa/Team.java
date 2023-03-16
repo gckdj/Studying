@@ -6,15 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Member {
+public class Team {
 
     @Id @GeneratedValue
-    @Column(name = "member_id")
-    private Long id;
-
-    @Column(name = "USERNAME")
-    private String username;
-
     @Column(name = "TEAM_ID")
-    private Long teamId;
+    private Long id;
+    private String name;
 }

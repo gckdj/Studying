@@ -25,7 +25,6 @@ public class JpaMain {
             // JPQL을 많이 사용하게 되면 양방향 매핑을 많이하게 된다.(그게 아니라면 단방향으로 처리해라)
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
-
             em.persist(orderItem);
 
             tx.commit();

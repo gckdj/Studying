@@ -12,13 +12,11 @@ public class Team {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "team")
+    // 팀과 멤버는 다대일 양방향 관계로 설계
+    @OneToMany
+    // JoinColumn이 없을 시 조인테이블 방식으로 전환(중간 테이블 생성방식, 비권장)
+    @JoinColumn(name = "TEAM_ID")
     private List<Member> members = new ArrayList<>();
-
-    public void addMember(Member member) {
-        member.setTeam(this);
-        members.add(member);
-    }
 
     public Long getId() {
         return id;

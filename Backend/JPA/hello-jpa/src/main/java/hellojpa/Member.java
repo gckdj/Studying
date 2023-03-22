@@ -1,6 +1,8 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -17,9 +19,20 @@ public class Member {
 
     // 1:N 관계시 N에는 @ManyToOne
     // 조인 시 매핑할 컬럼 @JoinColumn
+    // @ManyToOne
+    // @JoinColumn(name = "TEAM_ID")
+    // insertable + updatable => false 조회전용 속성
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(insertable = false, updatable = false)
     private Team team;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
+
+    @ManyToMany
+    @JoinTable(name = "MEMBER_PRODUCT")
+    private List<Product> products = new ArrayList<>();
 
     public Long getId() {
         return id;

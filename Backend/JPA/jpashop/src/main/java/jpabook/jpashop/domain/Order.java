@@ -18,6 +18,11 @@ public class Order {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    @OneToOne
+    @JoinColumn(name = "DELEVERY_ID")
+    private Delivery delivery;
+
+
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -32,6 +37,8 @@ public class Order {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
+
+
 
     public Long getId() {
         return id;

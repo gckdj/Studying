@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Team {
+// Date 같은 공통속성은 상속매핑
+public class Team extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "TEAM_ID")

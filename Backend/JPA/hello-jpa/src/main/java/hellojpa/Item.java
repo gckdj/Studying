@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+// InheritanceType.TABLE_PER_CLASS -> 각 테이블마다 중복데이터 허용(name, price)
+// 데이터조회 시 상속된 모든테이블 조회결과 union -> 비효율
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Item {
 
     @Id @GeneratedValue

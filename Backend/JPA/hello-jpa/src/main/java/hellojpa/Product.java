@@ -18,8 +18,8 @@ public class Product {
 
     // 다대다 맵핑은 중간테이블을 생성해서 처리
     // 다대다는 실무에서 사용불가
-    @ManyToMany(mappedBy = "products")
-    private List<Member> members = new ArrayList<>();
+    // @ManyToMany(mappedBy = "products")
+    // private List<Member> members = new ArrayList<>();
 
     public Long getId() {
         return id;

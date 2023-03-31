@@ -1,9 +1,6 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Movie;
-import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.domain.Book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,13 +16,14 @@ public class JpaMain {
         tx.begin();
         
         try {
-            Movie movie = new Movie();
-            movie.setDirector("aaaa");
-            movie.setActor("bbbb");
-            movie.setName("바람과 함께 사라지다");
-            movie.setPrice(10000);
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("김동진");
 
-            em.persist(movie);
+            em.persist(book);
+
+            em.flush();
+            em.clear();
 
             tx.commit();
         } catch (Exception e) {

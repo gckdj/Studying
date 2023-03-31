@@ -8,7 +8,7 @@ import javax.persistence.*;
  * 코드 가독성에 도움
  */
 @Entity
-public class OrderItem {
+public class OrderItem extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "ORDER_ITEM_ID")

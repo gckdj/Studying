@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class JpaMain {
@@ -51,7 +52,7 @@ public class JpaMain {
             // 양방향관계의 경우 외래키가 있는 곳에 mapped by 걸어준다. (Member)
             // 외래키가 있는 곳이 주인이라는 기준을 정해놓는다면 설계 시 연관관계 매핑이 어려움 점을 줄일 수 있다.
 
-            Movie movie = new Movie();
+           /* Movie movie = new Movie();
             movie.setDirector("aaaa");
             movie.setActor("bbbb");
             movie.setName("바람과 함께 사라지다");
@@ -63,7 +64,30 @@ public class JpaMain {
             em.clear();
 
             Movie findMovie = em.find(Movie.class, movie.getId());
-            System.out.println("findMovie = " + findMovie.getName());
+            System.out.println("findMovie = " + findMovie.getName());*/
+
+            /*Member member = new Member();
+            member.setUsername("user1");
+            member.setCreatedBy("kim");
+            member.setCreatedDate(LocalDateTime.now());*/
+
+            Member member = new Member();
+            member.setUsername("hello");
+
+            em.persist(member);
+
+            // Member findMember = em.find(Member.class, member.getId());
+
+            // 가짜객체
+            // 객체사용 시에 쿼리전송
+            Member refMember = em.getReference(Member.class, member.getId());
+            System.out.println("refMember.getClass() = " + refMember.getClass());
+            System.out.println("refMember.getId() = " + refMember.getId());
+            System.out.println("refMember.getUsername() = " + refMember.getUsername());
+
+
+            em.flush();
+            em.clear();
 
             tx.commit();
         } catch (Exception e) {

@@ -1,12 +1,10 @@
-package hellojpa;
+package jpabook.jpashop.domain;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-// 매핑 시 상속된 클래스에 공통부여할 속성
-// 직접 생성경우 없음 -> 추상클래스 지정
-// Entity or MappedSuperclass 없으면 상속관계 매핑 X
+// 공통속성
 @MappedSuperclass
 public abstract class BaseEntity {
 

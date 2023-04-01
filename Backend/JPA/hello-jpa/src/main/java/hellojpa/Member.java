@@ -22,7 +22,8 @@ public class Member extends BaseEntity {
     // @ManyToOne
     // @JoinColumn(name = "TEAM_ID")
     // insertable + updatable => false 조회전용 속성
-    @ManyToOne
+    // 지연로딩 -> 객체 내 다른매핑 관계 프록시처리
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(insertable = false, updatable = false)
     private Team team;
 

@@ -13,7 +13,8 @@ public class Parent {
 
     private String name;
 
-    @OneToMany(mappedBy = "parent")
+    // 부모요소 저장 시 자식요소 저장
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.PERSIST)
     private List<Child> childList = new ArrayList<>();
 
     // 양방향매핑
@@ -34,7 +35,7 @@ public class Parent {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String  name) {
         this.name = name;
     }
 }

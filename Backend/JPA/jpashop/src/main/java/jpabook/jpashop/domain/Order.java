@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 // DB에서 인식을 못하는 경우가 있어 ORDERS로 명명(ORDER BY 충돌)
 @Table(name = "ORDERS")
@@ -14,16 +17,15 @@ public class Order extends BaseEntity {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToOne
+    @OneToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "DELEVERY_ID")
     private Delivery delivery;
 
-
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = ALL )
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;
@@ -37,8 +39,6 @@ public class Order extends BaseEntity {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
-
-
 
     public Long getId() {
         return id;

@@ -24,12 +24,13 @@ public class JpaMain {
             parent.addChild(c2);
 
             em.persist(parent);
-            em.persist(c1);
-            em.persist(c2  );
 
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
 
             tx.commit();
-
         } catch (Exception e) {
             tx.rollback();
         } finally {

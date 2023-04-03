@@ -15,20 +15,12 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Member member = new Member();
+            member.setUsername("hello");
+            member.setHomeAddress(new Address("city", "street", "10000"));
+            member.setWorkPeriod(new Period());
 
-            Child c1 = new Child();
-            Child c2 = new Child();
-
-            Parent parent = new Parent();
-            parent.addChild(c1);
-            parent.addChild(c2);
-
-            em.persist(parent);
-
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {
@@ -185,4 +177,13 @@ public class JpaMain {
     //
     //            List<Member> members = em.createQuery("select m from Member m join fetch m.team", Member.class)
     //                    .getResultList();
+
+    //Child c1 = new Child();
+    //            Child c2 = new Child();
+    //
+    //            Parent parent = new Parent();
+    //            parent.addChild(c1);
+    //            parent.addChild(c2);
+    //
+    //            em.persist(parent);
 }

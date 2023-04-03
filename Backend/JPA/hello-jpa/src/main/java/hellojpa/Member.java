@@ -27,6 +27,14 @@ public class Member extends BaseEntity {
     @JoinColumn(insertable = false, updatable = false)
     private Team team;
 
+    // 임베디드 타입 사용 전후 매핑테이블은 동일
+    // 좋은 설계 : 매핑 테이블 총 수 < 생성된 클래스의 수
+    @Embedded
+    private Period  workPeriod;
+
+    @Embedded
+    private Address homeAddress;
+
     /*@OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
@@ -34,6 +42,12 @@ public class Member extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();*/
+
+    // 객체 내 무한루프를 주의 like toString은 Team 같은 객체의 toString을 다시 호출한다.
+    // 무한루프 즉시 스택오버플로우
+    // lombok의 toString은 가급적 사용을 자제할 것, 생성하더라도 확인할 것
+    // Entity를 컨트롤러의 결과값으로 제공하지말것..(엔티티가 변경될 경우 api 스펙이 변경되는것) -> dto로 변환하고 반환
+
 
     public Long getId() {
         return id;
@@ -59,8 +73,19 @@ public class Member extends BaseEntity {
         this.team = team;
     }
 
-    // 객체 내 무한루프를 주의 like toString은 Team 같은 객체의 toString을 다시 호출한다.
-    // 무한루프 즉시 스택오버플로우
-    // lombok의 toString은 가급적 사용을 자제할 것, 생성하더라도 확인할 것
-    // Entity를 컨트롤러의 결과값으로 제공하지말것..(엔티티가 변경될 경우 api 스펙이 변경되는것) -> dto로 변환하고 반환
+    public Period getWorkPeriod() {
+        return workPeriod;
+    }
+
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
 }

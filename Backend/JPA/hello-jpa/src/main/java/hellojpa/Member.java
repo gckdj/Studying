@@ -1,8 +1,11 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Member extends BaseEntity {
@@ -35,6 +38,15 @@ public class Member extends BaseEntity {
     @Embedded
     private Address homeAddress;
 
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOODS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    @Column(name = "FOOD_NAME")
+    private Set <String> favoriteFoods = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "ADDRESS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    private List<Address> addressHistory = new ArrayList<>();
+
     /*@OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
@@ -47,7 +59,6 @@ public class Member extends BaseEntity {
     // 무한루프 즉시 스택오버플로우
     // lombok의 toString은 가급적 사용을 자제할 것, 생성하더라도 확인할 것
     // Entity를 컨트롤러의 결과값으로 제공하지말것..(엔티티가 변경될 경우 api 스펙이 변경되는것) -> dto로 변환하고 반환
-
 
     public Long getId() {
         return id;
@@ -87,5 +98,21 @@ public class Member extends BaseEntity {
 
     public void setHomeAddress(Address homeAddress) {
         this.homeAddress = homeAddress;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<Address> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<Address> addressHistory) {
+        this.addressHistory = addressHistory;
     }
 }

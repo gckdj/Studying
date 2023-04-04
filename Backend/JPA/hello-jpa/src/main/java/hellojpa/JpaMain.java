@@ -15,12 +15,25 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", "10000"));
-            member.setWorkPeriod(new Period());
 
-            em.persist(member);
+            Member m1 = new Member();
+            m1.setUsername("member1");
+            m1.setHomeAddress(new Address("city1", "street", "10000"));
+
+            m1.getFavoriteFoods().add("치킨");
+            m1.getFavoriteFoods().add("피자");
+            m1.getFavoriteFoods().add("족발");
+
+            m1.getAddressHistory().add(new Address("old1", "oldstreet1", "10001"));
+            m1.getAddressHistory().add(new Address("old2", "oldstreet2", "10002"));
+
+            em.persist(m1);
+
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, m1.getId());
+            System.out.println(findMember.toString());
 
             tx.commit();
         } catch (Exception e) {
@@ -186,4 +199,25 @@ public class JpaMain {
     //            parent.addChild(c2);
     //
     //            em.persist(parent);
+
+    //Member member = new Member();
+    //            member.setUsername("hello");
+    //            member.setHomeAddress(new Address("city", "street", "10000"));
+    //            member.setWorkPeriod(new Period());
+
+    //Address address = new Address("city", "street", "10000");
+    //
+    //            Member m1 = new Member();
+    //            m1.setUsername("member1");
+    //            m1.setHomeAddress(address);
+    //            em.persist(m1);
+    //
+    //            // address의 값이 변경되면 적용된 모든 객체의 값이 변한다. (객체데이터는 참조)
+    //            // -> 인스턴스 복사활용 or 불편객체 사용 (Integer, String) or 객체 setter 제거
+    //            Address copyAddr = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+    //
+    //            Member m2 = new Member();
+    //            m2.setUsername("member1");
+    //            m2.setHomeAddress(copyAddr);
+    //            em.persist(m2);
 }

@@ -1,6 +1,9 @@
 package hellojpa;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -16,55 +19,24 @@ public class JpaMain {
         tx.begin();
 
         try {
+            /*List<Member> result = em.createQuery(
+                    "select m from Member m where m.username like '%kim'",
+                    Member.class
+            ).getResultList();
 
-            Member m1 = new Member();
-            m1.setUsername("member1");
-            m1.setHomeAddress(new Address("city1", "street", "10000"));
-
-            m1.getFavoriteFoods().add("치킨");
-            m1.getFavoriteFoods().add("피자");
-            m1.getFavoriteFoods().add("족발");
-
-            m1.getAddressHistory().add(new Address("old1", "oldstreet1", "10001"));
-            m1.getAddressHistory().add(new Address("old2", "oldstreet2", "10002"));
-
-            em.persist(m1);
-
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, m1.getId());
-            System.out.println(findMember.toString());
-
-            List<Address> addressHistory = findMember.getAddressHistory();
-
-            // select 쿼리가 따로 나간다(지연로딩 정책)
-            /*for (Address address : addressHistory) {
-                System.out.println("address = " + address);
-            }
-
-            Set<String> favoriteFoods = findMember.getFavoriteFoods();
-            for (String favoriteFood : favoriteFoods) {
-                System.out.println("favoriteFoods = " + favoriteFoods);
+            for (Member member : result) {
+                System.out.println("member = " + member);
             }*/
 
-            // findMember.getAddressHistory().setCity("newCity"); (x) 어떤 사이드 이펙트가 발생할지 모른다
-            // 바뀐부분만 수정해서 새로운 객체를 생성 삽입한다.
-            // JPA는 remove 실행 시 키와 일치하는 모든 데이터를 삭제하고,
-            // 기존 조회된 데이터와 신규생성할 데이터 쿼리를 날린다.
-            Address a = findMember.getHomeAddress();
-            findMember.setHomeAddress(new Address("newcity", a.getStreet(), a.getZipcode()));
+            // 객체를 대상으로 쿼리를 작성해 결과값을 얻는다. (SQL로 번역됨)
+            // 단, 문자열이기 때문에 동적인 쿼리를 작성하기 매우 불편하다. => Criteria의 필요성
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
 
-            // 리스트 내용수정은 기존의 값을 삭제하고 신규값을 삽입
-            // ex) 치킨 -> 한식
-            // 리스트가 관리된 내용은 JPA가 처리한다.
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("한식");
-
-            // 컬렉션은 equals를 기본 호출한다.
-            // 클래스 내에 오버라이드된 equals 메서드가 정확해야한다.
-            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
-            findMember.getAddressHistory().add(new Address("newcity1", "street", "10000"));
+            // 쉬운것 같지만 복잡한 예시로 갈수록 어렵다
+            Root<Member> m = query.from(Member.class);
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+            List<Member> resultList = em.createQuery(cq).getResultList();
 
             tx.commit();
         } catch (Exception e) {
@@ -251,4 +223,53 @@ public class JpaMain {
     //            m2.setUsername("member1");
     //            m2.setHomeAddress(copyAddr);
     //            em.persist(m2);
+
+    //Member m1 = new Member();
+    //            m1.setUsername("member1");
+    //            m1.setHomeAddress(new Address("city1", "street", "10000"));
+    //
+    //            m1.getFavoriteFoods().add("치킨");
+    //            m1.getFavoriteFoods().add("피자");
+    //            m1.getFavoriteFoods().add("족발");
+    //
+    //            m1.getAddressHistory().add(new Address("old1", "oldstreet1", "10001"));
+    //            m1.getAddressHistory().add(new Address("old2", "oldstreet2", "10002"));
+    //
+    //            em.persist(m1);
+    //
+    //            em.flush();
+    //            em.clear();
+    //
+    //            Member findMember = em.find(Member.class, m1.getId());
+    //            System.out.println(findMember.toString());
+    //
+    //            List<Address> addressHistory = findMember.getAddressHistory();
+    //
+    //            // select 쿼리가 따로 나간다(지연로딩 정책)
+    //            /*for (Address address : addressHistory) {
+    //                System.out.println("address = " + address);
+    //            }
+    //
+    //            Set<String> favoriteFoods = findMember.getFavoriteFoods();
+    //            for (String favoriteFood : favoriteFoods) {
+    //                System.out.println("favoriteFoods = " + favoriteFoods);
+    //            }*/
+    //
+    //            // findMember.getAddressHistory().setCity("newCity"); (x) 어떤 사이드 이펙트가 발생할지 모른다
+    //            // 바뀐부분만 수정해서 새로운 객체를 생성 삽입한다.
+    //            // JPA는 remove 실행 시 키와 일치하는 모든 데이터를 삭제하고,
+    //            // 기존 조회된 데이터와 신규생성할 데이터 쿼리를 날린다.
+    //            Address a = findMember.getHomeAddress();
+    //            findMember.setHomeAddress(new Address("newcity", a.getStreet(), a.getZipcode()));
+    //
+    //            // 리스트 내용수정은 기존의 값을 삭제하고 신규값을 삽입
+    //            // ex) 치킨 -> 한식
+    //            // 리스트가 관리된 내용은 JPA가 처리한다.
+    //            findMember.getFavoriteFoods().remove("치킨");
+    //            findMember.getFavoriteFoods().add("한식");
+    //
+    //            // 컬렉션은 equals를 기본 호출한다.
+    //            // 클래스 내에 오버라이드된 equals 메서드가 정확해야한다.
+    //            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
+    //            findMember.getAddressHistory().add(new Address("newcity1", "street", "10000"));
 }

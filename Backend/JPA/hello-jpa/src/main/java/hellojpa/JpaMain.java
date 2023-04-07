@@ -19,24 +19,7 @@ public class JpaMain {
         tx.begin();
 
         try {
-            /*List<Member> result = em.createQuery(
-                    "select m from Member m where m.username like '%kim'",
-                    Member.class
-            ).getResultList();
 
-            for (Member member : result) {
-                System.out.println("member = " + member);
-            }*/
-
-            // 객체를 대상으로 쿼리를 작성해 결과값을 얻는다. (SQL로 번역됨)
-            // 단, 문자열이기 때문에 동적인 쿼리를 작성하기 매우 불편하다. => Criteria의 필요성
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
-
-            // 쉬운것 같지만 복잡한 예시로 갈수록 어렵다
-            Root<Member> m = query.from(Member.class);
-            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
-            List<Member> resultList = em.createQuery(cq).getResultList();
 
             tx.commit();
         } catch (Exception e) {
@@ -272,4 +255,23 @@ public class JpaMain {
     //            // 클래스 내에 오버라이드된 equals 메서드가 정확해야한다.
     //            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
     //            findMember.getAddressHistory().add(new Address("newcity1", "street", "10000"));
+
+    ///*List<Member> result = em.createQuery(
+    //                    "select m from Member m where m.username like '%kim'",
+    //                    Member.class
+    //            ).getResultList();
+    //
+    //            for (Member member : result) {
+    //                System.out.println("member = " + member);
+    //            }*/
+    //
+    //            // 객체를 대상으로 쿼리를 작성해 결과값을 얻는다. (SQL로 번역됨)
+    //            // 단, 문자열이기 때문에 동적인 쿼리를 작성하기 매우 불편하다. => Criteria의 필요성
+    //            CriteriaBuilder cb = em.getCriteriaBuilder();
+    //            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+    //
+    //            // 쉬운것 같지만 복잡한 예시로 갈수록 어렵다
+    //            Root<Member> m = query.from(Member.class);
+    //            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+    //            List<Member> resultList = em.createQuery(cq).getResultList();
 }

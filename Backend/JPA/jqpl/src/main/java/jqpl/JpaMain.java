@@ -15,26 +15,25 @@ public class JpaMain {
 
         try {
 
-            for (int i = 0; i < 100; i++) {
-                Member member = new Member();
-                member.setUsername("member" + i);
-                member.setAge(i);
-                em.persist(member);
-            }
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setAge(10);
+            member.setTeam(team);
+            em.persist(member);
 
             em.flush();
             em.clear();
 
-            // sql 방언들을 추상화해 페이징 api를 제공한다.
-            List<Member> resultList = em.createQuery("select m from Member m order by m.age desc", Member.class)
-                    .setFirstResult(0)
-                    .setMaxResults(10)
+            String query = "select m from Member m left join m.team t";
+
+            List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
 
-            System.out.println("resultList.size() = " + resultList.size());
-            for (Member member1 : resultList) {
-                System.out.println("member1 = " + member1);
-            }
+            System.out.println("result.size() = " + result.size());
 
             tx.commit();
         } catch (Exception e) {
@@ -74,4 +73,15 @@ public class JpaMain {
     //
     //            // 엔티티가 아닌 정의된 클래스로 객체 반환가능
     //            em.createQuery("select new jqpl.MemberDTO(m.username, m.age) from Member m", MemberDTO.class);
+
+    //// sql 방언들을 추상화해 페이징 api를 제공한다.
+    //            List<Member> resultList = em.createQuery("select m from Member m order by m.age desc", Member.class)
+    //                    .setFirstResult(0)
+    //                    .setMaxResults(10)
+    //                    .getResultList();
+    //
+    //            System.out.println("resultList.size() = " + resultList.size());
+    //            for (Member member1 : resultList) {
+    //                System.out.println("member1 = " + member1);
+    //            }
 }

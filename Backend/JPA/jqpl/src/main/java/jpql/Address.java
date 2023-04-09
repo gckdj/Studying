@@ -1,4 +1,4 @@
-package jqpl;
+package jpql;
 
 import javax.persistence.Embeddable;
 

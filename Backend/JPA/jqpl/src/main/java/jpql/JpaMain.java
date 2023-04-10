@@ -21,35 +21,29 @@ public class JpaMain {
             em.persist(m1);
 
             Member m2 = new Member();
-            m2.setUsername("관리자1");
+            m2.setUsername("관리자2");
             em.persist(m2);
+
+            Member m3 = new Member();
+            m3.setUsername("관리자3");
+            em.persist(m3);
 
             em.flush();
             em.clear();
 
-            // 하이버네이트는 함수호출 시 group_concat(m.username)과 같은 직관적인 사용이 가능하다.
-            // String query = "select function('group_concat', m.username) from Member m";
+            // update 구문실행 이후 영향받은 row 반환
+            // 벌크연산 전에 flush 처리됨
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
 
-            // m.username: 상태필드, 추가적 탐색제한
-            // String query = "select m.username from Member m";
+            // 현 상태에서 멤버객체의 데이터를 조회하면 기존과 값이 똑같다 (영속성 컨텍스트에는 미반영상태임)
+            em.clear();
 
-            // 클래스 내 컬렉션 접근시 묵시적 조인발생(inner join), 추가적 탐색가능
-            // String query = "select m.team.name from Member m";
+            // 영속성 컨텍스트를 지우고 디비에서 새로 조회해오면 반영되어있다.
+            Member findMember = em.find(Member.class, m3.getId());
 
-            // 컬렉션 값: 추가적 탐색제한, 컬렉션 사이즈 제공
-            // String query = "select t.members.size from Team t";
-
-            // 조인구문: 결과값 객체에서 추가 탐색 시 해당 객체에 대한 추가검색
-            // fetch 조인: 첫 검색 시 쿼리에 조인을 포함하여 검색결과에 객체에 대한 데이터도 모두 포함된다.
-            String query = "select m from Member m join fetch m.team";
-            List<Collection> resultList = em.createQuery(query, Collection.class).getResultList();
-
-            for (Collection collection : resultList) {
-                System.out.println("collection = " + collection);
-            }
-
-            // 결론: 명시적 조인을 사용하자
-            // select m.username from Team t join t.members m
+            System.out.println("findMember.getAge() = " + findMember.getAge());
+            System.out.println("resultCount = " + resultCount);
 
             tx.commit();
         } catch (Exception e) {
@@ -129,5 +123,49 @@ public class JpaMain {
     //                System.out.println("objects = " + objects[0]);
     //                System.out.println("objects = " + objects[1]);
     //                System.out.println("objects = " + objects[2]);
+    //            }
+
+    //// 하이버네이트는 함수호출 시 group_concat(m.username)과 같은 직관적인 사용이 가능하다.
+    //            // String query = "select function('group_concat', m.username) from Member m";
+    //
+    //            // m.username: 상태필드, 추가적 탐색제한
+    //            // String query = "select m.username from Member m";
+    //
+    //            // 클래스 내 컬렉션 접근시 묵시적 조인발생(inner join), 추가적 탐색가능
+    //            // String query = "select m.team.name from Member m";
+    //
+    //            // 컬렉션 값: 추가적 탐색제한, 컬렉션 사이즈 제공
+    //            // String query = "select t.members.size from Team t";
+    //
+    //            // 조인구문: 결과값 객체에서 추가 탐색 시 해당 객체에 대한 추가검색
+    //            // fetch 조인: 첫 검색 시 쿼리에 조인을 포함하여 검색결과에 객체에 대한 데이터도 모두 포함된다.
+    //            // String query = "select m from Member m join fetch m.team";
+    //            // List<Collection> resultList = em.createQuery(query, Collection.class).getResultList();
+    //
+    //            // 결론: 명시적 조인을 사용하자
+    //            // select m.username from Team t join t.members m
+    //
+    //            // String query = "select t from Team t join fetch t.members where t.name = '팀A'";
+    //            List<Team> list = em.createQuery(query, Team.class).getResultList();
+    //
+    //            // 조인으로 인한 데이터 뻥튀기 주의
+    //            // distinct 사용하는 경우 데이터베이스에서 처리가 안되어도 jpa에서 처리해준다.
+    //            for (Team team : list) {
+    //                System.out.println("team.getName() = " + team.getName() + "|team.getSize() = " + team.getMembers().size());
+    //            }
+    //
+    //            // 페치조인 대상에 별칭을 주고 조인조건을 걸지말자
+    //            // 페치조인은 데이터를 한번에 가져오는 장점이 있지만, 컬렉션을 조인하는 경우 데이터 뻥튀기 위험성이 있다.
+    //            // 이러한 이유로 컬렉션을 페치조인하면 해당 데이터에 페이징을 제공하지 않는다.
+    //            String query = "select t from Team t join fetch t.members as m where m.age > 10";
+
+    //// 네임드쿼리는 해당 엔티티에 사전에 정의해둔  JPQL을 끌어쓰는 기능
+    //            // 앱로딩 시점에 쿼리를 검증해주는 장점이 있음.
+    //            List<Member> list = em.createNamedQuery("Member.findByUsername", Member.class)
+    //                    .setParameter("username", "관리자1")
+    //                    .getResultList();
+    //
+    //            for (Member member : list) {
+    //                System.out.println("member = " + member);
     //            }
 }

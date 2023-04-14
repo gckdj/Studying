@@ -1,5 +1,6 @@
 server:
-  port: 9001
+  # 0 입력시 랜덤포트 작동 -> 랜덤으로 여러 인스턴스를 켜도 하나만 켜져있다.
+  port: 0
 spring:
   application:
     name: user-service
@@ -9,3 +10,5 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}

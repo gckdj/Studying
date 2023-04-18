@@ -1,6 +1,13 @@
 server:
   port: 8000
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
 # 자바소스로 필터적용 -> spring gateway yml 파일설정
 spring:
   application:
@@ -15,7 +22,7 @@ spring:
             postLogger: true
       routes:
         - id: first-service
-          uri: http://localhost:8081/
+          uri: lb://my-first-service
           predicates:
             - Path=/first-service/**
           filters:
@@ -23,7 +30,7 @@ spring:
             #- AddResponseHeader=first-response, first-response-header2
             - CustomFilter
         - id: second-service
-          uri: http://localhost:8082/
+          uri: lb://my-second-service
           predicates:
             - Path=/second-service/**
           filters:

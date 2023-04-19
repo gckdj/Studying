@@ -1,4 +1,4 @@
-package com.gateway.test2;
+package com.microservice.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,9 +6,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class Test2Application {
+public class UserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Test2Application.class, args);
+		SpringApplication.run(UserApplication.class, args);
 	}
+
 }

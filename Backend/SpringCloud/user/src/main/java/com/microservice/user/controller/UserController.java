@@ -4,10 +4,13 @@ import com.microservice.user.dto.UserDTO;
 import com.microservice.user.service.UserService;
 import com.microservice.user.vo.Greeting;
 import com.microservice.user.vo.RequestUser;
+import com.microservice.user.vo.ResponseUser;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,13 +42,16 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public String createUser(@RequestBody RequestUser user) {
+    public ResponseEntity<ResponseUser> createUser(@RequestBody RequestUser user) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDTO userDto = mapper.map(user, UserDTO.class);
 
         System.out.println(userDto);
         userService.createUser(userDto);
-        return "create user method is called";
+
+        ResponseUser res = mapper.map(userDto, ResponseUser.class);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 }

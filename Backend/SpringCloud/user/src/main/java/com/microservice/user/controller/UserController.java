@@ -14,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
+// 게이트웨이에서 라우팅된 경로를 받도록 내용추가
+@RequestMapping("/user-service")
 public class UserController {
 
     private final Environment env;
@@ -30,7 +31,9 @@ public class UserController {
 
     @GetMapping("health_check")
     public String status() {
-        return "It's Working in User Service";
+        // return "It's Working in User Service";
+        return String.format("It's Working in User Service on PORT %s",
+                env.getProperty("local.server.port"));
     }
 
     @GetMapping("welcome")

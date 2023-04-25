@@ -29,16 +29,22 @@ spring:
             #- AddRequestHeader=first-request, first-request-header2
             #- AddResponseHeader=first-response, first-response-header2
             - CustomFilter
-        - id: second-service
-          uri: lb://my-second-service
+        - id: user-service
+          uri: lb://USER-SERVICEf
           predicates:
-            - Path=/second-service/**
-          filters:
-            #- AddRequestHeader=second-request, second-request-header2
-            #- AddResponseHeader=second-response, second-response-header2
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: Hi, there.
-                preLogger: true
-                postLogger: true
+            # 조건식 사용
+            # 라우팅된 경로는 api에서 읽을 수 없어 404에러 발생!
+            - Path=/user-service/**
+#        - id: second-service
+#          uri: lb://my-second-service
+#          predicates:
+#            - Path=/second-service/**
+#          filters:
+#            #- AddRequestHeader=second-request, second-request-header2
+#            #- AddResponseHeader=second-response, second-response-header2
+#            - name: CustomFilter
+#            - name: LoggingFilter
+#              args:
+#                baseMessage: Hi, there.
+#                preLogger: true
+#                postLogger: true

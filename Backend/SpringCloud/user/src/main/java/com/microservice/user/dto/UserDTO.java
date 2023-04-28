@@ -1,8 +1,10 @@
 package com.microservice.user.dto;
 
+import com.microservice.user.vo.ResponseOrder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -14,4 +16,6 @@ public class UserDTO {
 
     private String userId;
     private String encryptedPwd;
+
+    List<ResponseOrder> orders;
 }

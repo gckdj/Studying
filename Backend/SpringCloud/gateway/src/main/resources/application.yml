@@ -30,7 +30,7 @@ spring:
             #- AddResponseHeader=first-response, first-response-header2
             - CustomFilter
         - id: user-service
-          uri: lb://USER-SERVICEf
+          uri: lb://USER-SERVICE
           predicates:
             # 조건식 사용
             # 라우팅된 경로는 api에서 읽을 수 없어 404에러 발생!

@@ -3,14 +3,18 @@ package com.microservice.user.service;
 import com.microservice.user.dto.UserDTO;
 import com.microservice.user.jpa.UserEntity;
 import com.microservice.user.jpa.UserRepository;
+import com.microservice.user.vo.ResponseOrder;
 import com.netflix.discovery.converters.Auto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -47,8 +51,16 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUserByUserId(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
 
-        UserDTO map = new ModelMapper().map(userEntity, UserDTO.class);
-        return ;
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("User Not Found");
+        }
+
+        UserDTO userDto = new ModelMapper().map(userEntity, UserDTO.class);
+
+        List<ResponseOrder> orders = new ArrayList<>();
+        userDto.setOrders(orders);
+
+        return userDto;
     }
 
     @Override

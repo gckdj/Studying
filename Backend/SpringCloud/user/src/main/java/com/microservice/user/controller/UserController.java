@@ -77,8 +77,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @GetMapping("/find-user")
-    public ResponseEntity<List<ResponseUser>> getUsers(@RequestParam String userId) {
+    @GetMapping("/users/{userid}")
+    public ResponseEntity<List<ResponseUser>> getUsers(@PathVariable("userId") String userId) {
         UserDTO findUser = userService.getUserByUserId(userId);
         List<ResponseUser> result = new ArrayList<>();
         ModelMapper mapper = new ModelMapper();

@@ -308,3 +308,9 @@ Backend/SpringCloud/user/.mvn/wrapper/maven-wrapper.jar
 Backend/SpringCloud/user/.mvn/wrapper/maven-wrapper.jar
 Backend/SpringCloud/user/.mvn/wrapper/maven-wrapper.jar
 Backend/SpringCloud/service/.idea/service.iml
+*.jar
+Backend/SpringCloud/catalog/gradle/wrapper/gradle-wrapper.jar
+Backend/SpringCloud/catalog/gradlew
+Backend/SpringCloud/catalog/gradlew.bat
+Backend/SpringCloud/catalog/gradle/wrapper/gradle-wrapper.jar
+Backend/SpringCloud/catalog/gradle/wrapper/gradle-wrapper.jar

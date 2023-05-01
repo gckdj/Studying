@@ -15,6 +15,8 @@ spring:
       ddl-auto: create-drop
     show-sql: true
     generate-ddl: true
+    defer-datasource-initialization: true # boot 2.5 이상부터 테이블생성 정책변경
+    database: h2
 
 eureka:
   instance:

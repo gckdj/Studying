@@ -21,20 +21,24 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        - id: first-service
-          uri: lb://my-first-service
-          predicates:
-            - Path=/first-service/**
-          filters:
-            #- AddRequestHeader=first-request, first-request-header2
-            #- AddResponseHeader=first-response, first-response-header2
-            - CustomFilter
+#        - id: first-service
+#          uri: lb://my-first-service
+#          predicates:
+#            - Path=/first-service/**
+#          filters:
+#            #- AddRequestHeader=first-request, first-request-header2
+#            #- AddResponseHeader=first-response, first-response-header2
+#            - CustomFilter
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
             # 조건식 사용
             # 라우팅된 경로는 api에서 읽을 수 없어 404에러 발생!
             - Path=/user-service/**
+        - id: catalog-service
+          uri: lb://CATALOG-SERVICE
+          predicates:
+            - Path=/catalog-service/**
 #        - id: second-service
 #          uri: lb://my-second-service
 #          predicates:

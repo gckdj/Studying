@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: catalog-service
+    name: order-service
   h2:
     console:
       enabled: true
@@ -12,17 +12,7 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/mem:testdb
-    username: sa
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    generate-ddl: true
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: always
+    url: jdbc:h2:mem:testdb
 
 eureka:
   instance:
@@ -35,4 +25,4 @@ eureka:
 
 logging:
   level:
-    com.ms.catalog: DEBUG
+    com.ms.orderservice: DEBUG

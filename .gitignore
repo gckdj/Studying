@@ -314,3 +314,7 @@ Backend/SpringCloud/catalog/gradlew
 Backend/SpringCloud/catalog/gradlew.bat
 Backend/SpringCloud/catalog/gradle/wrapper/gradle-wrapper.jar
 Backend/SpringCloud/catalog/gradle/wrapper/gradle-wrapper.jar
+Backend/SpringCloud/order-service/gradle/wrapper/gradle-wrapper.jar
+Backend/SpringCloud/order-service/gradle/wrapper/gradle-wrapper.properties
+Backend/SpringCloud/order-service/gradlew
+Backend/SpringCloud/order-service/gradlew.bat

@@ -25,6 +25,7 @@ public class OrderServiceImpl implements OrderService{
         orderDto.setTotalPrice(orderDto.getQty() * orderDto.getUnitPrice());
 
         ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         OrderEntity orderEntity = mapper.map(orderDto, OrderEntity.class);
 
         orderRepository.save(orderEntity);

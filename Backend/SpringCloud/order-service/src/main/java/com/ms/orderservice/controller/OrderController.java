@@ -35,12 +35,11 @@ public class OrderController {
     }
 
     @PostMapping("/{userId}/orders")
-    public ResponseEntity<ResponseOrder> getOrders(@PathVariable("userId") String userId,
-                                                   @RequestBody RequestOrder orderDetails) {
+    public ResponseEntity<ResponseOrder> createOrder(
+            @PathVariable(name = "userId") String userId,
+            @RequestBody RequestOrder orderDetails) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
-        List<ResponseOrder> result = new ArrayList<>();
 
         OrderDto orderDto = mapper.map(orderDetails, OrderDto.class);
         orderDto.setUserId(userId);

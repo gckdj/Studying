@@ -2,8 +2,9 @@ package com.microservice.user.service;
 
 import com.microservice.user.dto.UserDTO;
 import com.microservice.user.jpa.UserEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     UserDTO createUser(UserDTO userDTO);
 
     UserDTO getUserByUserId(String userId);

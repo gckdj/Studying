@@ -20,7 +20,6 @@ import java.util.List;
 
 @RestController
 // 게이트웨이에서 라우팅된 경로를 받도록 내용추가
-@RequestMapping("/user-service")
 public class UserController {
 
     private final Environment env;

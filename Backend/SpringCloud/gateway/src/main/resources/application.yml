@@ -29,12 +29,12 @@ spring:
 #            #- AddRequestHeader=first-request, first-request-header2
 #            #- AddResponseHeader=first-response, first-response-header2
 #            - CustomFilter
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            # 조건식 사용
-            # 라우팅된 경로는 api에서 읽을 수 없어 404에러 발생!
-            - Path=/user-service/**
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            # 조건식 사용
+#            # 라우팅된 경로는 api에서 읽을 수 없어 404에러 발생!
+#            - Path=/user-service/**
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
@@ -56,3 +56,28 @@ spring:
 #                baseMessage: Hi, there.
 #                preLogger: true
 #                postLogger: true
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/login # predicates 패스명시 -> 해당 패스한해 적용 -> 타 경로 복붙
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            # 형식변환 localhost:8080/user-service/login -> localhost:8080/login
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/users
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/users
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

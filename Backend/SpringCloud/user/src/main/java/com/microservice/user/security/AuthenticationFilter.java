@@ -2,7 +2,10 @@ package com.microservice.user.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microservice.user.service.UserService;
 import com.microservice.user.vo.RequestLogin;
+import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -16,20 +19,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
         try {
             RequestLogin creds = new ObjectMapper().readValue(request.getInputStream(), RequestLogin.class);
             return getAuthenticationManager().authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        creds.getEmail(),
-                        creds.getPassword(),
-                        new ArrayList<>()
-                )
+                    new UsernamePasswordAuthenticationToken(
+                            creds.getEmail(),
+                            creds.getPassword(),
+                            new ArrayList<>()
+                    )
             );
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -39,6 +41,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
+        //super.successfulAuthentication(request, response, chain, authResult);
     }
 }

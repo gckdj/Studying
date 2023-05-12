@@ -6,7 +6,6 @@ import com.microservice.user.service.UserService;
 import com.microservice.user.vo.Greeting;
 import com.microservice.user.vo.RequestUser;
 import com.microservice.user.vo.ResponseUser;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

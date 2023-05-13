@@ -11,4 +11,6 @@ public interface UserService extends UserDetailsService {
 
     // 디비에서 가져온 데이터 바로사용
     Iterable<UserEntity> getUserByAll();
+
+    UserDTO getUserDetailsByEmail(String username);
 }

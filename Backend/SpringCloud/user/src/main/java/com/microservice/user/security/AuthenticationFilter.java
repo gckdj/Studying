@@ -2,6 +2,7 @@ package com.microservice.user.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microservice.user.dto.UserDTO;
 import com.microservice.user.service.UserService;
 import com.microservice.user.vo.RequestLogin;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,17 @@ import java.util.ArrayList;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    private UserService userService;
+    private Environment env;
+
+    public AuthenticationFilter(AuthenticationManager authenticationManager,
+                                UserService userService,
+                                Environment env) {
+        super(authenticationManager);
+        this.userService = userService;
+        this.env = env;
+    }
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
@@ -48,6 +60,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         //super.successfulAuthentication(request, response, chain, authResult);
 
         // 인증성공 후 데이터디버깅
-        log.debug(((User) authResult.getPrincipal()).getUsername());
+        String username = ((User) authResult.getPrincipal()).getUsername();
+        UserDTO userDetails = userService.getUserDetailsByEmail(username);
     }
 }

@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.IpAddressMatcher;
@@ -36,18 +35,17 @@ public class WebSecurity {
         http.csrf().disable();
         http.headers().frameOptions().disable();
         http.authorizeHttpRequests(authorize -> {
-                try {
-                    authorize
-                            .antMatchers("/**").permitAll()
-                            .requestMatchers(PathRequest.toH2Console()).permitAll()
-                            .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()
-                            .and()
-                            .addFilter(getAuthenticationFilter());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            try {
+                authorize
+                    .antMatchers("/**").permitAll()
+                    .requestMatchers(PathRequest.toH2Console()).permitAll()
+                    .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()
+                    .and()
+                    .addFilter(getAuthenticationFilter());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        );
+        });
         return http.build();
     }
 
@@ -57,11 +55,12 @@ public class WebSecurity {
     }
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
-        AuthenticationFilter authenticationFilter =
-                new AuthenticationFilter(authenticationManager(auth), userService, env);
-        AuthenticationManagerBuilder builder = new AuthenticationManagerBuilder(objectPostProcessor);
-        authenticationFilter.setAuthenticationManager(authenticationManager(builder));
-        return authenticationFilter;
+        AuthenticationManagerBuilder auth = new AuthenticationManagerBuilder(objectPostProcessor);
+        return new AuthenticationFilter(
+                authenticationManager(auth),
+                userService,
+                env
+        );
     }
 
 //    protected void configure(HttpSecurity http) throws Exception {

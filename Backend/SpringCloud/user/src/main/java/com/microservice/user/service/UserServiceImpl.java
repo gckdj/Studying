@@ -91,9 +91,6 @@ public class UserServiceImpl implements UserService {
         if (userEntity == null) {
             throw new UsernameNotFoundException(email);
         }
-
-        UserDTO userDTO = new ModelMapper().map(userEntity, UserDTO.class);
-
-        return null;
+        return new ModelMapper().map(userEntity, UserDTO.class);
     }
 }

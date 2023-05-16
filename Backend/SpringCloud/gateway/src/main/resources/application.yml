@@ -7,6 +7,9 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+token:
+  expiration_time: 86400000
+  secret: user_token # 임의의 값
 
 # 자바소스로 필터적용 -> spring gateway yml 파일설정
 spring:
@@ -56,6 +59,15 @@ spring:
 #                baseMessage: Hi, there.
 #                preLogger: true
 #                postLogger: true
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:

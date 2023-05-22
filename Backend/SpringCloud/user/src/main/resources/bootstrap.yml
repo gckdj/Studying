@@ -1,0 +1,6 @@
+# config server에서 설정정보 통제
+spring:
+  cloud:
+    config:
+      uri: http://127.0.0.1:8888
+      name: ecommerce # yml 파일명

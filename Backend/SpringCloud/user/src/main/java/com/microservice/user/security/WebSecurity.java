@@ -38,6 +38,7 @@ public class WebSecurity {
             try {
                 authorize
                     .antMatchers("/**").permitAll()
+                    .antMatchers("/actuator/**").permitAll()
                     .requestMatchers(PathRequest.toH2Console()).permitAll()
                     .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()
                     .and()

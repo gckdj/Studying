@@ -39,7 +39,7 @@ public class UserController {
         return String.format("It's Working in User Service"
                 + ", port(local.server.port)=" + env.getProperty("local.server.port")
                 + ", port(server.port)=" + env.getProperty("server.port")
-                + ", token secret=" + env.getProperty("local.server.port")
+                + ", token secret=" + env.getProperty("local.token.secret")
                 + ", token expiration time=" + env.getProperty("token.expiration_time"));
     }
 

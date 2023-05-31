@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
 
         UserDTO userDto = new ModelMapper().map(userEntity, UserDTO.class);
 
-        List<ResponseOrder> orders = new ArrayList<>();
+        // List<ResponseOrder> orders = new ArrayList<>();
+        String orderUrl = "http://127.0.0.1:8000/order-service/%s/orders";
         userDto.setOrders(orders);
 
         return userDto;

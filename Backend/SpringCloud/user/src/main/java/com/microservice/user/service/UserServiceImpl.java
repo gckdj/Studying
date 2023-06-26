@@ -1,5 +1,6 @@
 package com.microservice.user.service;
 
+import com.microservice.user.client.OrderServiceClient;
 import com.microservice.user.dto.UserDTO;
 import com.microservice.user.jpa.UserEntity;
 import com.microservice.user.jpa.UserRepository;
@@ -33,16 +34,20 @@ public class UserServiceImpl implements UserService {
     Environment env;
     RestTemplate restTemplate;
 
+    OrderServiceClient orderServiceClient;
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
                            Environment env,
-                           RestTemplate restTemplate)
+                           RestTemplate restTemplate,
+                           OrderServiceClient orderServiceClient)
     {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.env = env;
         this.restTemplate = restTemplate;
+        this.orderServiceClient = orderServiceClient;
     }
 
     @Override
@@ -74,17 +79,20 @@ public class UserServiceImpl implements UserService {
         UserDTO userDto = new ModelMapper().map(userEntity, UserDTO.class);
         // List<ResponseOrder> orders = new ArrayList<>();
 
-        /* using as rest template */
-        String orderUrl = String.format(env.getProperty("order_service.url"), userId);
-        ResponseEntity<List<ResponseOrder>> orderListResponse =
-            restTemplate.exchange(orderUrl, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<ResponseOrder>>() {
+        // using as rest template
+        // feign client 사용으로 주석
+//        String orderUrl = String.format(env.getProperty("order_service.url"), userId);
+//        ResponseEntity<List<ResponseOrder>> orderListResponse =
+//            restTemplate.exchange(orderUrl, HttpMethod.GET, null,
+//                new ParameterizedTypeReference<List<ResponseOrder>>() {
+//
+//                });
+        // List<ResponseOrder> ordersList = orderListResponse.getBody();
 
-                });
-
-        List<ResponseOrder> ordersList = orderListResponse.getBody();
+        // using as feign client
+        // rest template의 역할이 인터페이스의 메소드를 통해 간단히 표현된다.
+        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
         userDto.setOrders(ordersList);
-
         return userDto;
     }
 

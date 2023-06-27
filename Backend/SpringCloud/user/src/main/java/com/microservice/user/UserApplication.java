@@ -22,7 +22,7 @@ public class UserApplication {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-// feign client로 대체
+	// feign client 대체
 	@Bean
 	@LoadBalanced
 	public RestTemplate restTemplate() {

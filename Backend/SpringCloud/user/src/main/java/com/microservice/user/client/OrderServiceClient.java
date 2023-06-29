@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "order-service")
+@FeignClient(name = "order-service",
+    configuration = LoggerLevelConfig.class,
+    decode404 = true)
 public interface OrderServiceClient {
 
-    @GetMapping("/order-service/{userId}/orders}")
+    @GetMapping("/order-service/{userId}/orders")
     List<ResponseOrder> getOrders(@PathVariable String userId);
 }

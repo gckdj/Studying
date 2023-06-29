@@ -6,6 +6,8 @@ import com.microservice.user.jpa.UserEntity;
 import com.microservice.user.jpa.UserRepository;
 import com.microservice.user.vo.ResponseOrder;
 import com.netflix.discovery.converters.Auto;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,29 +28,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    Environment env;
-    RestTemplate restTemplate;
-
-    OrderServiceClient orderServiceClient;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder,
-                           Environment env,
-                           RestTemplate restTemplate,
-                           OrderServiceClient orderServiceClient)
-    {
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.env = env;
-        this.restTemplate = restTemplate;
-        this.orderServiceClient = orderServiceClient;
-    }
+//    public static Environment env;
+//    public static RestTemplate restTemplate;
+    private final OrderServiceClient orderServiceClient;
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {

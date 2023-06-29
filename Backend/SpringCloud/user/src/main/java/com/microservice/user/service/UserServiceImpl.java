@@ -6,8 +6,10 @@ import com.microservice.user.jpa.UserEntity;
 import com.microservice.user.jpa.UserRepository;
 import com.microservice.user.vo.ResponseOrder;
 import com.netflix.discovery.converters.Auto;
+import feign.FeignException;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -50,9 +53,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setEncryptedPwd(bCryptPasswordEncoder.encode(userDTO.getPwd()));
 
         userRepository.save(userEntity);
-
-        UserDTO rtUserDto = mapper.map(userEntity, UserDTO.class);
-        return rtUserDto;
+        return mapper.map(userEntity, UserDTO.class);
     }
 
     @Override
@@ -68,16 +69,26 @@ public class UserServiceImpl implements UserService {
 
         // using as rest template
         // feign client 사용으로 주석
-//        String orderUrl = String.format(env.getProperty("order_service.url"), userId);
-//        ResponseEntity<List<ResponseOrder>> orderListResponse =
-//            restTemplate.exchange(orderUrl, HttpMethod.GET, null,
-//                new ParameterizedTypeReference<List<ResponseOrder>>() {
-//
-//                });
+        /*String orderUrl = String.format(env.getProperty("order_service.url"), userId);
+        ResponseEntity<List<ResponseOrder>> orderListResponse =
+            restTemplate.exchange(orderUrl, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<ResponseOrder>>() {
+
+                });*/
         // List<ResponseOrder> ordersList = orderListResponse.getBody();
 
         // using as feign client
         // rest template의 역할이 인터페이스의 메소드를 통해 간단히 표현된다.
+
+        /*
+        // Feign exception 처리
+        try {
+            ordersList = orderServiceClient.getOrders(userId);
+        } catch (FeignException ex) {
+            log.error(ex.getMessage());
+        }*/
+
+        // ErrorDecoder 사용해 예외처리
         List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
         userDto.setOrders(ordersList);
         return userDto;

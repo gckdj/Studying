@@ -34,7 +34,7 @@ greeting:
 
 logging:
   level:
-    com.microservice.user: DEBUG
+    com.microservice.client: DEBUG
 
 #
 #token:

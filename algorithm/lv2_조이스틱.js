@@ -1,27 +1,30 @@
 function solution(name) {
-    let count = 0;
+    // name = "AAAACB"
+    // name = 'AABAAAAAAABBB'
     const arr = name.split('');
-    let move 0;
+    let move = arr.length - 1;
     
     for (let i = 0; i < arr.length; i++) {
         const from = 'A'.charCodeAt(0);
         const to = arr[i].charCodeAt(0);
-        
-        if (arr[i] !== 'A' && i !== 0) {
-            countNotA++;
-        }
-        
         const u_distance = to - from
         const d_distance = 'Z'.charCodeAt(0) - to + 1;
         
-        if (u_distance > d_distance) {
-            count += d_distance;
-        } else {
-            count += u_distance;
-        }
-        let nextCur = i + 1;
-        if (nextCur < arr.length &&)
-    }
+        count += Math.min(d_distance, u_distance);
         
-    return count + result;
+        if (i < arr.length - 1 && arr[i + 1] === 'A') {
+            let nextCur = i + 1;
+            while (nextCur < arr.length && arr[nextCur] === 'A') {
+                nextCur += 1;
+            }
+            // 정방향, 정방향 -> 역방향, 역방향 -> 정방향
+            move = Math.min(move,
+                            i * 2 + (arr.length - nextCur),
+                            (arr.length - nextCur) * 2 + i);
+            
+            console.log(move);
+        }
+    }
+    
+    return count + move;
 }

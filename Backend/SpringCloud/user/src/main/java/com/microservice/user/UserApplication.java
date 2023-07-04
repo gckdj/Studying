@@ -30,8 +30,9 @@ public class UserApplication {
 		return new RestTemplate();
 	}
 
-	@Bean
+	// 컴포넌트로 정해놨기 때문에 추가적인 처리필요없음
+	/*@Bean
 	public FeignErrorDecoder getFeignErrorDecoder() {
 		return new FeignErrorDecoder();
-	}
+	}*/
 }

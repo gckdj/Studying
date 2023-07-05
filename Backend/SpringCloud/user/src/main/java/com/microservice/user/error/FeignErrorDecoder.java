@@ -28,6 +28,8 @@ public class FeignErrorDecoder implements ErrorDecoder {
                     return new ResponseStatusException(HttpStatus.valueOf(response.status()),
                         env.getProperty("order_service.exception.orders_is_empty"));
                 }
+                //  "message": "사용자의 주문정보가 없습니다.",
+                //  "path": "/users/d9c75d25-3697-4312-8b66-11a39cdb0e6d"
                 break;
             }
             default:

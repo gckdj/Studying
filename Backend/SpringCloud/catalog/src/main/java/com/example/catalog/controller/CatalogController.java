@@ -1,17 +1,17 @@
-package com.ms.catalog.controller;
+package com.example.catalog.controller;
 
-import com.ms.catalog.entity.CatalogEntity;
-import com.ms.catalog.service.CatalogService;
+import com.example.catalog.entity.CatalogEntity;
+import com.example.catalog.service.CatalogService;
 import com.ms.catalog.vo.ResponseCatalog;
-import com.netflix.discovery.converters.Auto;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class CatalogController {
     @GetMapping("heath-check")
     public String status() {
         return String.format("It's Working in Catalog Service on Port %s",
-                env.getProperty("local.service.port"));
+            env.getProperty("local.service.port"));
     }
 
     @PostMapping("/catalogs")

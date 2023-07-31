@@ -1,8 +1,7 @@
-package com.ms.catalog.service;
+package com.example.catalog.service;
 
-import com.ms.catalog.entity.CatalogEntity;
-import com.ms.catalog.entity.CatalogRepository;
-import com.netflix.discovery.converters.Auto;
+import com.example.catalog.entity.CatalogEntity;
+import com.example.catalog.entity.CatalogRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

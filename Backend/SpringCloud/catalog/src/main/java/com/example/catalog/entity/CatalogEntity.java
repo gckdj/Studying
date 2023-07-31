@@ -1,4 +1,4 @@
-package com.ms.catalog.entity;
+package com.example.catalog.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -11,7 +11,8 @@ import java.util.Date;
 @Entity
 @Table(name = "catalog")
 public class CatalogEntity implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length = 120, unique = true)

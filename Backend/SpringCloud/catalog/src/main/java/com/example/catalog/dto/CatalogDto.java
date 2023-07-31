@@ -1,4 +1,4 @@
-package com.ms.catalog.dto;
+package com.example.catalog.dto;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.ms.catalog.entity;
+package com.example.catalog.entity;
 
 import org.springframework.data.repository.CrudRepository;
 

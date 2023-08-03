@@ -35,8 +35,12 @@ public class UserController {
     @GetMapping("health_check")
     public String status() {
         // return "It's Working in User Service";
-        return String.format("It's Working in User Service on PORT %s",
-                env.getProperty("local.server.port"));
+        // 로컬 구성정보 제거 -> config server 구성정보 사용
+        return String.format("It's Working in User Service"
+                + ", port(local.server.port)=" + env.getProperty("local.server.port")
+                + ", port(server.port)=" + env.getProperty("server.port")
+                + ", token secret=" + env.getProperty("local.token.secret")
+                + ", token expiration time=" + env.getProperty("token.expiration_time"));
     }
 
     @GetMapping("welcome")
@@ -75,7 +79,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @GetMapping("/users/{userid}")
+    @GetMapping("/users/{userId}")
     public ResponseEntity<List<ResponseUser>> getUsers(@PathVariable("userId") String userId) {
         UserDTO findUser = userService.getUserByUserId(userId);
         List<ResponseUser> result = new ArrayList<>();

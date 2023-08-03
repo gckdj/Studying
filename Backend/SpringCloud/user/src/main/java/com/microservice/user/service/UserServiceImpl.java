@@ -1,35 +1,44 @@
 package com.microservice.user.service;
 
+import com.microservice.user.client.OrderServiceClient;
 import com.microservice.user.dto.UserDTO;
 import com.microservice.user.jpa.UserEntity;
 import com.microservice.user.jpa.UserRepository;
 import com.microservice.user.vo.ResponseOrder;
 import com.netflix.discovery.converters.Auto;
+import feign.FeignException;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+//    public static Environment env;
+//    public static RestTemplate restTemplate;
+    private final OrderServiceClient orderServiceClient;
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
@@ -44,9 +53,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setEncryptedPwd(bCryptPasswordEncoder.encode(userDTO.getPwd()));
 
         userRepository.save(userEntity);
-
-        UserDTO rtUserDto = mapper.map(userEntity, UserDTO.class);
-        return rtUserDto;
+        return mapper.map(userEntity, UserDTO.class);
     }
 
     @Override
@@ -58,10 +65,32 @@ public class UserServiceImpl implements UserService {
         }
 
         UserDTO userDto = new ModelMapper().map(userEntity, UserDTO.class);
+        // List<ResponseOrder> orders = new ArrayList<>();
 
-        List<ResponseOrder> orders = new ArrayList<>();
-        userDto.setOrders(orders);
+        // using as rest template
+        // feign client 사용으로 주석
+        /*String orderUrl = String.format(env.getProperty("order_service.url"), userId);
+        ResponseEntity<List<ResponseOrder>> orderListResponse =
+            restTemplate.exchange(orderUrl, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<ResponseOrder>>() {
 
+                });*/
+        // List<ResponseOrder> ordersList = orderListResponse.getBody();
+
+        // using as feign client
+        // rest template의 역할이 인터페이스의 메소드를 통해 간단히 표현된다.
+
+        /*
+        // Feign exception 처리
+        try {
+            ordersList = orderServiceClient.getOrders(userId);
+        } catch (FeignException ex) {
+            log.error(ex.getMessage());
+        }*/
+
+        // ErrorDecoder 사용해 예외처리
+        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
+        userDto.setOrders(ordersList);
         return userDto;
     }
 

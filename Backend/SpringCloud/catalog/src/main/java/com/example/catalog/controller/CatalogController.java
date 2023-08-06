@@ -2,7 +2,7 @@ package com.example.catalog.controller;
 
 import com.example.catalog.entity.CatalogEntity;
 import com.example.catalog.service.CatalogService;
-import com.ms.catalog.vo.ResponseCatalog;
+import com.example.catalog.vo.ResponseCatalog;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -40,9 +40,7 @@ public class CatalogController {
 
         ModelMapper mapper = new ModelMapper();
         List<ResponseCatalog> result = new ArrayList<>();
-        allCatalogs.forEach(v -> {
-            result.add(mapper.map(v, ResponseCatalog.class));
-        });
+        allCatalogs.forEach(v -> result.add(mapper.map(v, ResponseCatalog.class)));
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

@@ -7,6 +7,7 @@ import com.ms.orderservice.messagequeue.OrderProducer;
 import com.ms.orderservice.service.OrderService;
 import com.ms.orderservice.vo.RequestOrder;
 import com.ms.orderservice.vo.ResponseOrder;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/order-service")
+@Slf4j
 public class OrderController {
     OrderProducer orderProducer;
     Environment env;
@@ -48,6 +50,7 @@ public class OrderController {
     public ResponseEntity<ResponseOrder> createOrder(
         @PathVariable(name = "userId") String userId,
         @RequestBody RequestOrder orderDetails) {
+        log.info("Before add orders data");
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
@@ -65,17 +68,29 @@ public class OrderController {
         kafkaProducer.send("example-category-topic", orderDto);
         orderProducer.send("orders", orderDto);
 
-        ResponseOrder responseOrder= mapper.map(orderDto, ResponseOrder.class);
+        ResponseOrder responseOrder = mapper.map(orderDto, ResponseOrder.class);
+        log.info("After added orders data");
         return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);
     }
 
     @GetMapping("/{userId}/orders")
-    public ResponseEntity<List<ResponseOrder>> getOrder(@PathVariable("userId") String userId) {
+    public ResponseEntity<List<ResponseOrder>> getOrder(@PathVariable("userId") String userId) throws Exception {
+        log.info("Before retrieve orders data");
         Iterable<OrderEntity> orderList = orderService.getOrdersByUserId(userId);
         List<ResponseOrder> result = new ArrayList<>();
         orderList.forEach(v -> {
             result.add(new ModelMapper().map(v, ResponseOrder.class));
         });
+
+        // zipkin 내 예외처리 확인
+        try {
+            Thread.sleep(1000);
+            throw new Exception("장애 발생");
+        } catch (InterruptedException ex) {
+            log.error(ex.getMessage());
+        }
+
+        log.info("Add retrieved orders data");
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

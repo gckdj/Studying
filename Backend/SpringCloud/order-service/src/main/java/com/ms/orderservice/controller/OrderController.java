@@ -78,9 +78,7 @@ public class OrderController {
         log.info("Before retrieve orders data");
         Iterable<OrderEntity> orderList = orderService.getOrdersByUserId(userId);
         List<ResponseOrder> result = new ArrayList<>();
-        orderList.forEach(v -> {
-            result.add(new ModelMapper().map(v, ResponseOrder.class));
-        });
+        orderList.forEach(v -> result.add(new ModelMapper().map(v, ResponseOrder.class)));
 
         // zipkin 내 예외처리 확인
         try {
